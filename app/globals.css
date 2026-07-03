@@ -1,6 +1,6 @@
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -76,10 +76,11 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-geist), 'Geist', 'Geist Fallback';
-  --font-mono: var(--font-geist-mono), 'Geist Mono', 'Geist Mono Fallback';
-  --font-sport: var(--font-sport), 'Oswald', sans-serif;
-  --font-kr: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-sans: var(--font-geist), "Geist", "Geist Fallback";
+  --font-mono: var(--font-geist-mono), "Geist Mono", "Geist Mono Fallback";
+  --font-sport: var(--font-sport), "Oswald", sans-serif;
+  --font-kr:
+    "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -166,12 +167,7 @@
   }
 
   .text-head-of-table {
-    background: linear-gradient(
-      to right,
-      #facc15,
-      #f59e0b,
-      #ca8a04
-    );
+    background: linear-gradient(to right, #facc15, #f59e0b, #ca8a04);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -340,7 +336,7 @@
   }
 
   .ple-card::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
@@ -435,11 +431,7 @@
         rgba(0, 0, 0, 0.02) 8px,
         rgba(0, 0, 0, 0.02) 9px
       ),
-      linear-gradient(
-        160deg,
-        rgba(241, 245, 249, 0.95) 0%,
-        rgba(248, 250, 252, 0.9) 100%
-      );
+      linear-gradient(160deg, rgba(241, 245, 249, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%);
   }
 
   .dark .ple-card--elimination-chamber {
@@ -458,11 +450,7 @@
         rgba(255, 255, 255, 0.02) 8px,
         rgba(255, 255, 255, 0.02) 9px
       ),
-      linear-gradient(
-        160deg,
-        rgba(39, 39, 42, 0.95) 0%,
-        rgba(24, 24, 27, 0.9) 100%
-      );
+      linear-gradient(160deg, rgba(39, 39, 42, 0.95) 0%, rgba(24, 24, 27, 0.9) 100%);
   }
 
   .ple-card--elimination-chamber:hover {
@@ -745,7 +733,7 @@
   }
 
   .records-competitor-card::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;

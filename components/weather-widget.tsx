@@ -3,8 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
-const apiBaseUrl =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000";
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000";
 
 type WeatherState =
   | { status: "loading" }
@@ -41,9 +40,7 @@ async function fetchSeoulWeather() {
     /* ignore */
   }
   if (!res.ok) {
-    throw new Error(
-      typeof data.detail === "string" ? data.detail : `weather ${res.status}`
-    );
+    throw new Error(typeof data.detail === "string" ? data.detail : `weather ${res.status}`);
   }
   if (data.temp_c == null || data.condition_id == null) {
     throw new Error("invalid weather payload");
@@ -102,7 +99,7 @@ export function WeatherWidget({ className }: { className?: string }) {
         className={cn(
           pillClass,
           "cursor-pointer transition-colors hover:bg-stone-200/65 dark:hover:bg-stone-700/65 hover:text-stone-950 dark:hover:text-stone-50",
-          className
+          className,
         )}
         title="서울 날씨를 불러오지 못했습니다. backend/.env 의 OPENWEATHER_API_KEY와 서버 실행을 확인하세요."
         aria-label="서울 날씨 다시 불러오기"
@@ -120,7 +117,7 @@ export function WeatherWidget({ className }: { className?: string }) {
       className={cn(
         pillClass,
         "cursor-pointer transition-colors hover:bg-stone-700/65 hover:text-stone-50",
-        className
+        className,
       )}
       title={`${weather.place} · ${weather.label} · ${weather.temp}°C (클릭 시 새로고침)`}
       aria-label={`${weather.place} 날씨 ${weather.label}, 기온 ${weather.temp}도`}

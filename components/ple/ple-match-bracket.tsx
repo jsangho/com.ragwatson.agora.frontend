@@ -6,11 +6,7 @@ import { cn } from "@/lib/utils";
 import { BRACKET_LABELS } from "@/lib/bracket-labels";
 import type { PleSlug } from "@/lib/wwe-ple";
 import { getBracketTheme } from "@/lib/wwe-ple-bracket-theme";
-import {
-  getPleMatches,
-  isMultiMatch,
-  type PleMatchCard,
-} from "@/lib/wwe-ple-matches";
+import { getPleMatches, isMultiMatch, type PleMatchCard } from "@/lib/wwe-ple-matches";
 import {
   boardMatchesToCards,
   fetchPleBoard,
@@ -118,10 +114,7 @@ function buildInitialState(matches: PleMatchCard[]): StoredBracketState {
   return state;
 }
 
-function resolveMyPick(
-  m: PleBoardMatch,
-  savedPicks: Record<string, string>
-): Side | number | null {
+function resolveMyPick(m: PleBoardMatch, savedPicks: Record<string, string>): Side | number | null {
   const raw = m.myPick ?? savedPicks[m.id];
   if (raw == null) return null;
   if (m.format === "multi") {
@@ -134,7 +127,7 @@ function resolveMyPick(
 
 function stateFromBoard(
   board: PleBoard,
-  savedPicks: Record<string, string> = {}
+  savedPicks: Record<string, string> = {},
 ): StoredBracketState {
   const state: StoredBracketState = {};
   for (const m of board.matches) {
@@ -147,8 +140,7 @@ function stateFromBoard(
       state[m.id] = { kind: "multi", votes, selected: pickIdx };
     } else {
       const selected = resolveMyPick(m, savedPicks);
-      const side =
-        selected === "left" || selected === "right" ? selected : null;
+      const side = selected === "left" || selected === "right" ? selected : null;
       state[m.id] = {
         kind: "singles",
         votes: { left: m.siteVotes.left, right: m.siteVotes.right },
@@ -161,7 +153,7 @@ function stateFromBoard(
 
 function mergePreservedSelections(
   prev: StoredBracketState,
-  next: StoredBracketState
+  next: StoredBracketState,
 ): StoredBracketState {
   const merged = { ...next };
   for (const [id, entry] of Object.entries(prev)) {
@@ -169,9 +161,7 @@ function mergePreservedSelections(
     const target = merged[id];
     if (!target || target.selected !== null) continue;
     merged[id] =
-      target.kind === entry.kind
-        ? ({ ...target, selected: entry.selected } as VoteState)
-        : target;
+      target.kind === entry.kind ? ({ ...target, selected: entry.selected } as VoteState) : target;
   }
   return merged;
 }
@@ -183,8 +173,7 @@ function matchShowsResult(m: PleBoardMatch): boolean {
 function normalizeStoredEntry(entry: VoteState, match: PleMatchCard): VoteState {
   if (isMultiMatch(match)) {
     const count = match.competitors.length;
-    const base =
-      entry.kind === "multi" ? [...entry.votes] : emptyMultiVotes(count);
+    const base = entry.kind === "multi" ? [...entry.votes] : emptyMultiVotes(count);
     while (base.length < count) base.push(0);
     const votes = base.slice(0, count);
 
@@ -230,10 +219,7 @@ const initialBracketUiState: BracketUiState = {
   submitError: null,
 };
 
-function countDraftPicks(
-  matchIds: string[],
-  state: StoredBracketState
-): number {
+function countDraftPicks(matchIds: string[], state: StoredBracketState): number {
   return matchIds.filter((id) => state[id]?.selected != null).length;
 }
 
@@ -242,10 +228,7 @@ function matchPickable(m: PleBoardMatch, eventFinished: boolean): boolean {
   return !eventFinished && m.status !== "finished";
 }
 
-function ensureVoteEntry(
-  prev: StoredBracketState,
-  match: PleMatchCard
-): VoteState {
+function ensureVoteEntry(prev: StoredBracketState, match: PleMatchCard): VoteState {
   const existing = prev[match.id];
   if (existing) return existing;
   if (isMultiMatch(match)) {
@@ -258,10 +241,7 @@ function ensureVoteEntry(
   return { kind: "singles", votes: emptySinglesVotes(), selected: null };
 }
 
-function allPredictionsCommitted(
-  board: PleBoard,
-  eventFinished: boolean
-): boolean {
+function allPredictionsCommitted(board: PleBoard, eventFinished: boolean): boolean {
   const open = board.matches.filter((m) => matchPickable(m, eventFinished));
   if (open.length === 0) return false;
   return open.every((m) => m.myPick != null);
@@ -275,18 +255,14 @@ export function PleMatchBracket({ slug, className }: PleMatchBracketProps) {
   const accountUserId = user?.id;
   const boardQuery = useMemo(
     () => ({ clientId, userId: accountUserId }),
-    [clientId, accountUserId]
+    [clientId, accountUserId],
   );
 
   const [ui, setUi] = useState<BracketUiState>(initialBracketUiState);
-  const [state, setState] = useState<StoredBracketState>(() =>
-    buildInitialState(staticMatches)
-  );
+  const [state, setState] = useState<StoredBracketState>(() => buildInitialState(staticMatches));
 
   const patchUi = (
-    patch:
-      | Partial<BracketUiState>
-      | ((prev: BracketUiState) => Partial<BracketUiState>)
+    patch: Partial<BracketUiState> | ((prev: BracketUiState) => Partial<BracketUiState>),
   ) =>
     setUi((prev) => {
       const p = typeof patch === "function" ? patch(prev) : patch;
@@ -294,9 +270,7 @@ export function PleMatchBracket({ slug, className }: PleMatchBracketProps) {
     });
 
   const matches: PleBoardMatch[] =
-    ui.useApi && ui.board
-      ? ui.board.matches
-      : (staticMatches as unknown as PleBoardMatch[]);
+    ui.useApi && ui.board ? ui.board.matches : (staticMatches as unknown as PleBoardMatch[]);
   const eventFinished = ui.useApi && ui.board?.status === "finished";
 
   useEffect(() => {
@@ -317,8 +291,7 @@ export function PleMatchBracket({ slug, className }: PleMatchBracketProps) {
           board: data,
           useApi: true,
           offline: false,
-          committed:
-            !finished && allPredictionsCommitted(data, finished),
+          committed: !finished && allPredictionsCommitted(data, finished),
         });
         setState(stateFromBoard(data, loadMyPicks(slug)));
       } catch {
@@ -371,8 +344,7 @@ export function PleMatchBracket({ slug, className }: PleMatchBracketProps) {
           board: data,
           useApi: true,
           offline: false,
-          committed:
-            !finished && allPredictionsCommitted(data, finished),
+          committed: !finished && allPredictionsCommitted(data, finished),
         });
         setState(stateFromBoard(data, loadMyPicks(slug)));
       } catch {
@@ -400,21 +372,14 @@ export function PleMatchBracket({ slug, className }: PleMatchBracketProps) {
         const finished = live.status === "finished";
         patchUi((prev) => ({
           board: live,
-          committed:
-            prev.committed ||
-            (!finished && allPredictionsCommitted(live, finished)),
+          committed: prev.committed || (!finished && allPredictionsCommitted(live, finished)),
         }));
-        setState((prev) =>
-          mergePreservedSelections(
-            prev,
-            stateFromBoard(live, loadMyPicks(slug))
-          )
-        );
+        setState((prev) => mergePreservedSelections(prev, stateFromBoard(live, loadMyPicks(slug))));
       },
       () => {
         /* SSE 실패 시 폴링 없이 마지막 스냅샷 유지 */
       },
-      accountUserId
+      accountUserId,
     );
   }, [slug, clientId, accountUserId, ui.useApi]);
 
@@ -427,7 +392,7 @@ export function PleMatchBracket({ slug, className }: PleMatchBracketProps) {
         /* quota */
       }
     },
-    [slug, ui.useApi]
+    [slug, ui.useApi],
   );
 
   const handleSelect = useCallback(
@@ -458,44 +423,34 @@ export function PleMatchBracket({ slug, className }: PleMatchBracketProps) {
         return prev;
       });
     },
-    [user, ui.committed]
+    [user, ui.committed],
   );
 
   const canPredict = Boolean(user) && !eventFinished;
 
   const pickableIds = useMemo(
-    () =>
-      matches
-        .filter((m) => matchPickable(m, !!eventFinished))
-        .map((m) => m.id),
-    [matches, eventFinished]
+    () => matches.filter((m) => matchPickable(m, !!eventFinished)).map((m) => m.id),
+    [matches, eventFinished],
   );
 
-  const draftCount = useMemo(
-    () => countDraftPicks(pickableIds, state),
-    [pickableIds, state]
-  );
+  const draftCount = useMemo(() => countDraftPicks(pickableIds, state), [pickableIds, state]);
 
   const canConfirm =
-    canPredict &&
-    !ui.committed &&
-    pickableIds.length > 0 &&
-    draftCount === pickableIds.length;
+    canPredict && !ui.committed && pickableIds.length > 0 && draftCount === pickableIds.length;
 
   const showActionBar = matches.length > 0;
 
   const handleConfirm = useCallback(async () => {
     if (!canConfirm || ui.submitting || accountUserId == null) return;
 
-    const items = pickableIds.map((matchId) => {
-      const entry = state[matchId];
-      if (!entry || entry.selected == null) return null;
-      const pick =
-        typeof entry.selected === "number"
-          ? String(entry.selected)
-          : entry.selected;
-      return { matchKey: matchId, pick };
-    }).filter((x): x is { matchKey: string; pick: string } => x != null);
+    const items = pickableIds
+      .map((matchId) => {
+        const entry = state[matchId];
+        if (!entry || entry.selected == null) return null;
+        const pick = typeof entry.selected === "number" ? String(entry.selected) : entry.selected;
+        return { matchKey: matchId, pick };
+      })
+      .filter((x): x is { matchKey: string; pick: string } => x != null);
 
     patchUi({ submitting: true, submitError: null });
 
@@ -508,12 +463,7 @@ export function PleMatchBracket({ slug, className }: PleMatchBracketProps) {
     }
 
     try {
-      const updated = await submitPlePredictionsBatch(
-        slug,
-        clientId,
-        items,
-        accountUserId
-      );
+      const updated = await submitPlePredictionsBatch(slug, clientId, items, accountUserId);
       for (const item of items) {
         saveMyPick(slug, item.matchKey, item.pick);
       }
@@ -525,16 +475,7 @@ export function PleMatchBracket({ slug, className }: PleMatchBracketProps) {
         submitError: e instanceof Error ? e.message : "예측 저장 실패",
       });
     }
-  }, [
-    canConfirm,
-    ui.submitting,
-    ui.useApi,
-    pickableIds,
-    state,
-    slug,
-    clientId,
-    accountUserId,
-  ]);
+  }, [canConfirm, ui.submitting, ui.useApi, pickableIds, state, slug, clientId, accountUserId]);
 
   const handleEditDraft = useCallback(() => {
     patchUi({ committed: false, submitError: null });
@@ -553,7 +494,9 @@ export function PleMatchBracket({ slug, className }: PleMatchBracketProps) {
   return (
     <section className={cn("space-y-4 pb-28", className)}>
       <div>
-        <h2 className="font-kr-hero text-xl text-stone-900 dark:text-white sm:text-2xl">전체 경기 · 예측</h2>
+        <h2 className="font-kr-hero text-xl text-stone-900 dark:text-white sm:text-2xl">
+          전체 경기 · 예측
+        </h2>
         <p className="mt-1.5 text-xs text-stone-500">
           {user
             ? ui.committed
@@ -667,7 +610,7 @@ export function PleMatchBracket({ slug, className }: PleMatchBracketProps) {
                     "rounded-lg px-6 py-2.5 text-sm font-bold transition-all",
                     canConfirm && !ui.submitting
                       ? "btn-predict-confirm"
-                      : "cursor-not-allowed bg-stone-200 dark:bg-stone-800 text-stone-500 dark:text-stone-600"
+                      : "cursor-not-allowed bg-stone-200 dark:bg-stone-800 text-stone-500 dark:text-stone-600",
                   )}
                 >
                   {ui.submitting ? "저장 중…" : "예측 확정"}

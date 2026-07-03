@@ -9,8 +9,7 @@ import { KayfabeMark } from "@/components/kayfabe-logo";
 import { PleEventGrid } from "@/components/ple-event-grid";
 import { WweArenaShell } from "@/components/wwe-arena-shell";
 
-const apiBaseUrl =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000";
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000";
 
 interface SampleDataItem {
   [key: string]: string | number | boolean | null;
@@ -18,8 +17,7 @@ interface SampleDataItem {
 
 function TitanicQaAppContent() {
   const searchParams = useSearchParams();
-  const currentView =
-    searchParams.get("view") === "data" ? "data" : "qa";
+  const currentView = searchParams.get("view") === "data" ? "data" : "qa";
 
   useEffect(() => {
     if (currentView !== "qa") return;
@@ -46,7 +44,9 @@ function TitanicQaAppContent() {
               </div>
               <p className="relative z-10 mx-auto mt-4 max-w-2xl text-balance text-base font-medium leading-relaxed text-stone-600 dark:text-stone-400 sm:mt-5 sm:text-lg">
                 경기 결과를 예측하고 점수를 쌓아{" "}
-                <span className="font-sport font-semibold text-stone-900 dark:text-white">2026</span>
+                <span className="font-sport font-semibold text-stone-900 dark:text-white">
+                  2026
+                </span>
                 년의{" "}
                 <span className="text-head-of-table font-sport text-lg font-semibold sm:text-xl">
                   Head of the Table
@@ -62,9 +62,7 @@ function TitanicQaAppContent() {
                 <p className="font-sport text-sm font-semibold tracking-[-0.04em] text-stone-500 dark:text-stone-400 sm:text-base">
                   <span className="text-stone-900 dark:text-white">2026</span> Monthly PLE
                 </p>
-                <p className="mt-1 text-sm text-stone-500">
-                  이벤트를 골라 승부 예측에 참여하세요
-                </p>
+                <p className="mt-1 text-sm text-stone-500">이벤트를 골라 승부 예측에 참여하세요</p>
               </div>
               <PleEventGrid
                 variant="large"
@@ -179,9 +177,7 @@ function TitanicSampleDataPage() {
 
       {state.errorMessage && (
         <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-          <p className="text-sm text-red-700 dark:text-red-400 mb-3">
-            {state.errorMessage}
-          </p>
+          <p className="text-sm text-red-700 dark:text-red-400 mb-3">{state.errorMessage}</p>
           <button
             onClick={fetchData}
             aria-label="다시 불러오기"

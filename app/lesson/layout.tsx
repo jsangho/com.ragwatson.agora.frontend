@@ -10,18 +10,15 @@ const TITANIC_HREF = "/lesson/titanic";
 const DATA_COLLECTION_HREF = "/lesson/titanic/data-collection";
 const TITANIC_LIST_HREF = "/lesson/titanic/titaniclist";
 const SMITH_SAILOR_HREF = "/lesson/titanic/smith-sailor";
-export default function LessonLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const VISION_HREF = "/lesson/titanic/vision";
+export default function LessonLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isTitanic = pathname === TITANIC_HREF;
   const isDataCollection = pathname === DATA_COLLECTION_HREF;
   const isTitanicList = pathname === TITANIC_LIST_HREF;
   const isSmithSailor = pathname === SMITH_SAILOR_HREF;
-  const isLessonSection =
-    isTitanic || isDataCollection || isTitanicList || isSmithSailor;
+  const isVision = pathname === VISION_HREF;
+  const isLessonSection = isTitanic || isDataCollection || isTitanicList || isSmithSailor;
 
   const [expanded, setExpanded] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -41,7 +38,7 @@ export default function LessonLayout({
       <div
         className={cn(
           "flex items-center rounded-lg text-sm font-medium transition-colors",
-          isLessonSection ? "bg-stone-100 text-stone-950" : "text-stone-600 dark:text-stone-300"
+          isLessonSection ? "bg-stone-100 text-stone-950" : "text-stone-600 dark:text-stone-300",
         )}
       >
         <Link
@@ -49,8 +46,9 @@ export default function LessonLayout({
           aria-current={isTitanic ? "page" : undefined}
           className={cn(
             "min-w-0 flex-1 rounded-l-lg px-3 py-2.5 transition-colors",
-            !isLessonSection && "hover:bg-stone-100/60 dark:hover:bg-stone-800/60 hover:text-stone-900 dark:hover:text-stone-50",
-            isLessonSection && "hover:bg-stone-50"
+            !isLessonSection &&
+              "hover:bg-stone-100/60 dark:hover:bg-stone-800/60 hover:text-stone-900 dark:hover:text-stone-50",
+            isLessonSection && "hover:bg-stone-50",
           )}
         >
           타이타닉
@@ -62,15 +60,13 @@ export default function LessonLayout({
           aria-label={expanded ? "하위 메뉴 접기" : "하위 메뉴 펼치기"}
           className={cn(
             "flex shrink-0 items-center justify-center rounded-r-lg px-2 py-2.5 transition-colors",
-            !isLessonSection && "hover:bg-stone-100/60 dark:hover:bg-stone-800/60 hover:text-stone-900 dark:hover:text-stone-50",
-            isLessonSection && "hover:bg-stone-50"
+            !isLessonSection &&
+              "hover:bg-stone-100/60 dark:hover:bg-stone-800/60 hover:text-stone-900 dark:hover:text-stone-50",
+            isLessonSection && "hover:bg-stone-50",
           )}
         >
           <ChevronRight
-            className={cn(
-              "size-4 transition-transform duration-200",
-              expanded && "rotate-90"
-            )}
+            className={cn("size-4 transition-transform duration-200", expanded && "rotate-90")}
             aria-hidden
           />
         </button>
@@ -85,7 +81,7 @@ export default function LessonLayout({
               "rounded-lg py-2 pl-6 pr-3 text-sm transition-colors",
               isDataCollection
                 ? "bg-stone-100/90 font-semibold text-stone-950"
-                : "text-stone-600 dark:text-stone-300 hover:bg-stone-100/60 dark:hover:bg-stone-800/60 hover:text-stone-900 dark:hover:text-stone-50"
+                : "text-stone-600 dark:text-stone-300 hover:bg-stone-100/60 dark:hover:bg-stone-800/60 hover:text-stone-900 dark:hover:text-stone-50",
             )}
           >
             1. 데이터 수집
@@ -97,7 +93,7 @@ export default function LessonLayout({
               "rounded-lg py-2 pl-6 pr-3 text-sm transition-colors",
               isTitanicList
                 ? "bg-stone-100/90 font-semibold text-stone-950"
-                : "text-stone-600 dark:text-stone-300 hover:bg-stone-100/60 dark:hover:bg-stone-800/60 hover:text-stone-900 dark:hover:text-stone-50"
+                : "text-stone-600 dark:text-stone-300 hover:bg-stone-100/60 dark:hover:bg-stone-800/60 hover:text-stone-900 dark:hover:text-stone-50",
             )}
           >
             2. DB 리스트
@@ -109,13 +105,26 @@ export default function LessonLayout({
               "rounded-lg py-2 pl-6 pr-3 text-sm transition-colors",
               isSmithSailor
                 ? "bg-stone-100/90 font-semibold text-stone-950"
-                : "text-stone-600 dark:text-stone-300 hover:bg-stone-100/60 dark:hover:bg-stone-800/60 hover:text-stone-900 dark:hover:text-stone-50"
-            )}  
+                : "text-stone-600 dark:text-stone-300 hover:bg-stone-100/60 dark:hover:bg-stone-800/60 hover:text-stone-900 dark:hover:text-stone-50",
+            )}
           >
             3. 스미스 선장과 대화
           </Link>
         </>
       )}
+
+      <Link
+        href={VISION_HREF}
+        aria-current={isVision ? "page" : undefined}
+        className={cn(
+          "rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+          isVision
+            ? "bg-stone-100 text-stone-950"
+            : "text-stone-600 dark:text-stone-300 hover:bg-stone-100/60 dark:hover:bg-stone-800/60 hover:text-stone-900 dark:hover:text-stone-50",
+        )}
+      >
+        비전 처리
+      </Link>
     </nav>
   );
 
@@ -151,7 +160,7 @@ export default function LessonLayout({
       <div
         className={cn(
           "relative z-10 flex min-h-0 min-w-0 flex-1 flex-col",
-          isSmithSailor && "overflow-hidden"
+          isSmithSailor && "overflow-hidden",
         )}
       >
         <div className="sticky top-[4.25rem] z-20 flex items-center gap-2 border-b border-stone-200/60 dark:border-stone-800/60 bg-white/70 dark:bg-stone-900/70 px-4 py-3 backdrop-blur md:hidden">
@@ -196,4 +205,3 @@ export default function LessonLayout({
     </div>
   );
 }
-

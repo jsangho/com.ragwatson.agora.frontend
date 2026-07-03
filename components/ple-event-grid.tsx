@@ -66,7 +66,7 @@ export function PleEventGrid({
         isLarge
           ? "grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3"
           : "mx-auto flex max-w-5xl flex-wrap justify-center gap-2 sm:gap-2.5",
-        className
+        className,
       )}
     >
       {WWE_PLE_MONTHLY_ORDER.map((ple) => {
@@ -90,24 +90,19 @@ export function PleEventGrid({
                 !tbd && themeClass,
                 isLarge
                   ? "px-4 pb-3.5 pt-10 sm:px-4 sm:pb-4 sm:pt-11"
-                  : "px-2.5 py-2 text-xs sm:px-3 sm:text-sm"
+                  : "px-2.5 py-2 text-xs sm:px-3 sm:text-sm",
               )}
             >
               <span
                 className={cn(
                   "ple-status-badge absolute right-3 top-3 z-10",
-                  STATUS_CLASS[badge.variant]
+                  STATUS_CLASS[badge.variant],
                 )}
               >
                 {badge.label}
               </span>
 
-              <span
-                className={cn(
-                  "ple-month-badge absolute left-3 top-3",
-                  tbd && "opacity-60"
-                )}
-              >
+              <span className={cn("ple-month-badge absolute left-3 top-3", tbd && "opacity-60")}>
                 {formatPleMonth(ple.month)}
               </span>
 
@@ -115,7 +110,7 @@ export function PleEventGrid({
                 className={cn(
                   "block font-bold leading-tight tracking-tight",
                   tbd ? "text-stone-400 dark:text-stone-600" : "text-stone-800 dark:text-stone-50",
-                  isLarge ? "font-sport text-xl sm:text-2xl" : "font-semibold"
+                  isLarge ? "font-sport text-xl sm:text-2xl" : "font-semibold",
                 )}
               >
                 {ple.label}
@@ -124,7 +119,9 @@ export function PleEventGrid({
               <span
                 className={cn(
                   "mt-1.5 block leading-snug",
-                  tbd ? "text-[11px] text-stone-700 sm:text-xs" : "text-xs text-stone-500 sm:text-sm"
+                  tbd
+                    ? "text-[11px] text-stone-700 sm:text-xs"
+                    : "text-xs text-stone-500 sm:text-sm",
                 )}
               >
                 {formatPleSchedule(ple)}
@@ -134,7 +131,7 @@ export function PleEventGrid({
                 <span
                   className={cn(
                     "mt-2.5 block text-[11px] leading-snug sm:text-xs",
-                    tbd ? "text-stone-800" : "text-stone-500"
+                    tbd ? "text-stone-800" : "text-stone-500",
                   )}
                 >
                   {ple.highlight}

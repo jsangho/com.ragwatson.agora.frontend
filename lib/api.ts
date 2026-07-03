@@ -1,11 +1,11 @@
-export const apiBaseUrl =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000";
+export const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000";
 
-export const titanicApiBaseUrl        = `${apiBaseUrl}/api/titanic`;
-export const pleEventsBaseUrl         = `${apiBaseUrl}/api/ple_events`;
-export const pleMatchPicksBaseUrl     = `${apiBaseUrl}/api/ple-match-picks`;
-export const pleMatchesBaseUrl        = `${apiBaseUrl}/api/ple-matches`;
+export const titanicApiBaseUrl = `${apiBaseUrl}/api/titanic`;
+export const pleEventsBaseUrl = `${apiBaseUrl}/api/ple_events`;
+export const pleMatchPicksBaseUrl = `${apiBaseUrl}/api/ple-match-picks`;
+export const pleMatchesBaseUrl = `${apiBaseUrl}/api/ple-matches`;
 export const titleAcquisitionsBaseUrl = `${apiBaseUrl}/api/title-acquisitions`;
+export const visionApiBaseUrl = `${apiBaseUrl}/api/vision`;
 
 /**
  * Gemini 채팅 엔드포인트.
@@ -27,16 +27,16 @@ type ApiErrorBody = {
   message?: string;
 };
 
-export function parseApiError(
-  data: ApiErrorBody | null,
-  status: number
-): string {
+export function parseApiError(data: ApiErrorBody | null, status: number): string {
   const detail = data?.detail;
   if (typeof detail === "string") {
     return detail;
   }
   if (Array.isArray(detail)) {
-    return detail.map((item) => item.msg ?? "").filter(Boolean).join("\n");
+    return detail
+      .map((item) => item.msg ?? "")
+      .filter(Boolean)
+      .join("\n");
   }
   return data?.message ?? `서버 오류: ${status}`;
 }

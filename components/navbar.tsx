@@ -21,9 +21,7 @@ function navLinkClass(active: boolean, champion = false) {
     !champion &&
       active &&
       "border-stone-400 bg-stone-300 dark:bg-stone-600 text-stone-900 dark:text-stone-50 hover:bg-stone-300 dark:hover:bg-stone-600 hover:border-stone-400 hover:text-stone-900 dark:hover:text-stone-50",
-    champion &&
-      active &&
-      "border-amber-400/80 !text-amber-50"
+    champion && active && "border-amber-400/80 !text-amber-50",
   );
 }
 
@@ -46,7 +44,7 @@ function NavLink({
       className={cn(
         buttonVariants({ variant: "outline", size: "sm" }),
         "gap-1.5",
-        navLinkClass(active, champion)
+        navLinkClass(active, champion),
       )}
       {...(active ? { "aria-current": "page" as const } : {})}
     >
@@ -71,10 +69,8 @@ export function Navbar() {
   const isRankings = mounted && pathname === "/rankings";
   const isRecords = mounted && (pathname === "/records" || pathname.startsWith("/records/"));
   const isChampionship =
-    mounted &&
-    (pathname === "/championship" || pathname.startsWith("/championship/"));
-  const isLesson =
-    mounted && (pathname === "/lesson" || pathname.startsWith("/lesson/"));
+    mounted && (pathname === "/championship" || pathname.startsWith("/championship/"));
+  const isLesson = mounted && (pathname === "/lesson" || pathname.startsWith("/lesson/"));
   const isAdmin = mounted && pathname === "/admin";
   const isLogin = mounted && pathname === "/login";
   const isMyInfo = mounted && pathname === "/my-info";

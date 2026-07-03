@@ -3,37 +3,75 @@
 import { useState, useRef, useEffect } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import {
-  AreaChart, Area, BarChart, Bar, LineChart, Line,
-  XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
 } from "recharts";
 import {
-  Users, TrendingUp, TrendingDown, Download, ChevronDown,
-  Mail, Phone, ArrowUpRight, LayoutDashboard, Briefcase,
-  Package, Code, Coins, MessageSquare, Calendar, Inbox,
-  FolderOpen, User, Send, Loader2, CheckCircle, AlertCircle,
-  BookUser, Plus, SendHorizonal, MailOpen,
+  Users,
+  TrendingUp,
+  TrendingDown,
+  Download,
+  ChevronDown,
+  Mail,
+  Phone,
+  ArrowUpRight,
+  LayoutDashboard,
+  Briefcase,
+  Package,
+  Code,
+  Coins,
+  MessageSquare,
+  Calendar,
+  Inbox,
+  FolderOpen,
+  User,
+  Send,
+  Loader2,
+  CheckCircle,
+  AlertCircle,
+  BookUser,
+  Plus,
+  SendHorizonal,
+  MailOpen,
 } from "lucide-react";
 import { ContactsCsvUpload } from "@/components/contacts-csv-upload";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 // ── 데이터 ────────────────────────────────────────────────────────────────────
 
 const revenueData = [
-  { m: "3월", v: 18000 }, { m: "4월", v: 22000 }, { m: "5월", v: 19500 },
-  { m: "6월", v: 25000 }, { m: "7월", v: 32209 }, { m: "8월", v: 27000 },
-  { m: "9월", v: 30500 }, { m: "10월", v: 35000 }, { m: "11월", v: 31000 },
-  { m: "12월", v: 38000 }, { m: "1월", v: 36000 }, { m: "2월", v: 40000 },
+  { m: "3월", v: 18000 },
+  { m: "4월", v: 22000 },
+  { m: "5월", v: 19500 },
+  { m: "6월", v: 25000 },
+  { m: "7월", v: 32209 },
+  { m: "8월", v: 27000 },
+  { m: "9월", v: 30500 },
+  { m: "10월", v: 35000 },
+  { m: "11월", v: 31000 },
+  { m: "12월", v: 38000 },
+  { m: "1월", v: 36000 },
+  { m: "2월", v: 40000 },
   { m: "3월", v: 42000 },
 ];
 
 const leadsSalesData = [
-  { d: "월", v: 30 }, { d: "화", v: 45 }, { d: "수", v: 38 },
-  { d: "목", v: 60 }, { d: "금", v: 48 }, { d: "토", v: 35 }, { d: "일", v: 42 },
+  { d: "월", v: 30 },
+  { d: "화", v: 45 },
+  { d: "수", v: 38 },
+  { d: "목", v: 60 },
+  { d: "금", v: 48 },
+  { d: "토", v: 35 },
+  { d: "일", v: 42 },
 ];
 
 const retentionData = [
@@ -47,47 +85,59 @@ const retentionData = [
 ];
 
 const membersBarData = [
-  { v: 30 }, { v: 50 }, { v: 40 }, { v: 65 }, { v: 55 },
-  { v: 70 }, { v: 60 }, { v: 80 }, { v: 75 },
+  { v: 30 },
+  { v: 50 },
+  { v: 40 },
+  { v: 65 },
+  { v: 55 },
+  { v: 70 },
+  { v: 60 },
+  { v: 80 },
+  { v: 75 },
 ];
 
 const workTimeData = [
-  { h: "0시", v: 3 }, { h: "3시", v: 2 }, { h: "6시", v: 4 },
-  { h: "9시", v: 7 }, { h: "12시", v: 6 }, { h: "15시", v: 8 },
-  { h: "18시", v: 5 }, { h: "21시", v: 3 },
+  { h: "0시", v: 3 },
+  { h: "3시", v: 2 },
+  { h: "6시", v: 4 },
+  { h: "9시", v: 7 },
+  { h: "12시", v: 6 },
+  { h: "15시", v: 8 },
+  { h: "18시", v: 5 },
+  { h: "21시", v: 3 },
 ];
 
 const NAV_TABS = [
-  { label: "대시보드",   icon: LayoutDashboard, dropdown: false },
-  { label: "CRM",       icon: Briefcase,       dropdown: true  },
-  { label: "물류",      icon: Package,         dropdown: true  },
-  { label: "SaaS",      icon: Code,            dropdown: true  },
-  { label: "크립토",    icon: Coins,           dropdown: true  },
-  { label: "채팅",      icon: MessageSquare,   dropdown: false },
-  { label: "캘린더",    icon: Calendar,        dropdown: false },
-  { label: "이메일",    icon: Inbox,           dropdown: true  },
-  { label: "파일 관리", icon: FolderOpen,      dropdown: true  },
-  { label: "프로필",    icon: User,            dropdown: false },
+  { label: "대시보드", icon: LayoutDashboard, dropdown: false },
+  { label: "CRM", icon: Briefcase, dropdown: true },
+  { label: "물류", icon: Package, dropdown: true },
+  { label: "SaaS", icon: Code, dropdown: true },
+  { label: "크립토", icon: Coins, dropdown: true },
+  { label: "채팅", icon: MessageSquare, dropdown: false },
+  { label: "캘린더", icon: Calendar, dropdown: false },
+  { label: "이메일", icon: Inbox, dropdown: true },
+  { label: "파일 관리", icon: FolderOpen, dropdown: true },
+  { label: "프로필", icon: User, dropdown: false },
 ];
 
 const CAL_WEEKS = [
-  [null, null, null, 1,  2,  3,  4 ],
-  [5,   6,    7,    8,  9,  10, 11 ],
-  [12,  13,   14,   15, 16, 17, 18 ],
-  [19,  20,   21,   22, 23, 24, 25 ],
-  [26,  27,   28,   29, 30, null, null],
+  [null, null, null, 1, 2, 3, 4],
+  [5, 6, 7, 8, 9, 10, 11],
+  [12, 13, 14, 15, 16, 17, 18],
+  [19, 20, 21, 22, 23, 24, 25],
+  [26, 27, 28, 29, 30, null, null],
 ];
 
 const CAL_EVENTS = [
-  { time: "오전 9:00 · 10:00",  title: "주간 팀 미팅",         badge: "구글 미트", avatars: 4 },
-  { time: "오전 10:20 · 10:40", title: "여유 시간",             badge: null,        avatars: 0 },
-  { time: "오전 10:45 · 11:45", title: "게이미피케이션 데모",   badge: "슬랙",      avatars: 3 },
+  { time: "오전 9:00 · 10:00", title: "주간 팀 미팅", badge: "구글 미트", avatars: 4 },
+  { time: "오전 10:20 · 10:40", title: "여유 시간", badge: null, avatars: 0 },
+  { time: "오전 10:45 · 11:45", title: "게이미피케이션 데모", badge: "슬랙", avatars: 3 },
 ];
 
 const TEAM_ACTIVITY = [
-  { icon: "calendar", label: "미팅 예정",   sub: "3건", time: "14:00" },
-  { icon: "mail",     label: "이메일 발송", sub: "24건", time: "09:30" },
-  { icon: "phone",    label: "통화 완료",   sub: "12건", time: "11:10" },
+  { icon: "calendar", label: "미팅 예정", sub: "3건", time: "14:00" },
+  { icon: "mail", label: "이메일 발송", sub: "24건", time: "09:30" },
+  { icon: "phone", label: "통화 완료", sub: "12건", time: "11:10" },
 ];
 
 const TT = {
@@ -107,7 +157,9 @@ const TT = {
 
 function Card({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`rounded-xl border border-stone-300/50 dark:border-stone-700/50 bg-stone-50/70 dark:bg-stone-950/70 ${className}`}>
+    <div
+      className={`rounded-xl border border-stone-300/50 dark:border-stone-700/50 bg-stone-50/70 dark:bg-stone-950/70 ${className}`}
+    >
       {children}
     </div>
   );
@@ -127,7 +179,9 @@ function CalendarCard() {
 
       <div className="mb-0.5 grid grid-cols-7 text-center">
         {["일", "월", "화", "수", "목", "금", "토"].map((d) => (
-          <div key={d} className="py-1 text-[10px] font-medium text-stone-500">{d}</div>
+          <div key={d} className="py-1 text-[10px] font-medium text-stone-500">
+            {d}
+          </div>
         ))}
       </div>
 
@@ -138,11 +192,13 @@ function CalendarCard() {
               <div
                 key={di}
                 className={`flex h-7 items-center justify-center rounded-full text-[11px] font-medium
-                  ${day === 8
-                    ? "bg-red-600 text-white"
-                    : day
-                    ? "cursor-pointer text-stone-300 hover:bg-stone-800/60"
-                    : ""}`}
+                  ${
+                    day === 8
+                      ? "bg-red-600 text-white"
+                      : day
+                        ? "cursor-pointer text-stone-300 hover:bg-stone-800/60"
+                        : ""
+                  }`}
               >
                 {day ?? ""}
               </div>
@@ -166,7 +222,10 @@ function CalendarCard() {
             {ev.avatars > 0 && (
               <div className="mt-1.5 flex gap-1">
                 {Array.from({ length: Math.min(ev.avatars, 3) }).map((_, ai) => (
-                  <div key={ai} className="flex h-5 w-5 items-center justify-center rounded-full bg-red-700/80 text-[9px] font-bold text-white">
+                  <div
+                    key={ai}
+                    className="flex h-5 w-5 items-center justify-center rounded-full bg-red-700/80 text-[9px] font-bold text-white"
+                  >
                     A
                   </div>
                 ))}
@@ -201,7 +260,11 @@ function TotalMembersCard() {
       <p className="mb-0.5 text-3xl font-bold tracking-tight text-stone-50">2,521</p>
       <p className="mb-3 text-[10px] text-stone-400">2024년 6월 29일 기준</p>
       <ResponsiveContainer width="100%" height={36}>
-        <BarChart data={membersBarData} barSize={5} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+        <BarChart
+          data={membersBarData}
+          barSize={5}
+          margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+        >
           <Bar dataKey="v" fill="rgba(239,68,68,0.5)" radius={[2, 2, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
@@ -250,8 +313,17 @@ function LeadsSalesCard() {
         </button>
       </div>
       <ResponsiveContainer width="100%" height={90}>
-        <BarChart data={leadsSalesData} barSize={10} margin={{ top: 0, right: 0, bottom: 0, left: -28 }}>
-          <XAxis dataKey="d" tick={{ fontSize: 9, fill: "#78716c" }} axisLine={false} tickLine={false} />
+        <BarChart
+          data={leadsSalesData}
+          barSize={10}
+          margin={{ top: 0, right: 0, bottom: 0, left: -28 }}
+        >
+          <XAxis
+            dataKey="d"
+            tick={{ fontSize: 9, fill: "#78716c" }}
+            axisLine={false}
+            tickLine={false}
+          />
           <Bar dataKey="v" fill="#dc2626" radius={[3, 3, 0, 0]} />
           <Tooltip {...TT} cursor={{ fill: "rgba(255,255,255,0.03)" }} />
         </BarChart>
@@ -280,9 +352,7 @@ function RevenueCard() {
               key={t}
               onClick={() => setPeriod(t)}
               className={`rounded px-2 py-0.5 text-[10px] font-medium transition-colors ${
-                period === t
-                  ? "bg-red-600 text-white"
-                  : "text-stone-500 hover:text-stone-300"
+                period === t ? "bg-red-600 text-white" : "text-stone-500 hover:text-stone-300"
               }`}
             >
               {t}
@@ -294,14 +364,23 @@ function RevenueCard() {
         <AreaChart data={revenueData} margin={{ top: 4, right: 4, bottom: 0, left: -12 }}>
           <defs>
             <linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%"  stopColor="#dc2626" stopOpacity={0.35} />
-              <stop offset="95%" stopColor="#dc2626" stopOpacity={0}    />
+              <stop offset="5%" stopColor="#dc2626" stopOpacity={0.35} />
+              <stop offset="95%" stopColor="#dc2626" stopOpacity={0} />
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
-          <XAxis dataKey="m" tick={{ fontSize: 9, fill: "#78716c" }} axisLine={false} tickLine={false} />
-          <YAxis tick={{ fontSize: 9, fill: "#78716c" }} axisLine={false} tickLine={false}
-            tickFormatter={(v: number) => `${v / 1000}k`} />
+          <XAxis
+            dataKey="m"
+            tick={{ fontSize: 9, fill: "#78716c" }}
+            axisLine={false}
+            tickLine={false}
+          />
+          <YAxis
+            tick={{ fontSize: 9, fill: "#78716c" }}
+            axisLine={false}
+            tickLine={false}
+            tickFormatter={(v: number) => `${v / 1000}k`}
+          />
           <Tooltip {...TT} formatter={(v: number) => [`$${v.toLocaleString()}`, "매출"]} />
           <Area type="monotone" dataKey="v" stroke="#ef4444" strokeWidth={2} fill="url(#revGrad)" />
         </AreaChart>
@@ -323,9 +402,7 @@ function LeadsManagementCard() {
             key={t}
             onClick={() => setTab(t)}
             className={`rounded-full px-2.5 py-1 text-xs font-medium transition-colors ${
-              tab === t
-                ? "bg-red-600 text-white"
-                : "text-stone-400 hover:text-stone-200"
+              tab === t ? "bg-red-600 text-white" : "text-stone-400 hover:text-stone-200"
             }`}
           >
             {t}
@@ -334,10 +411,10 @@ function LeadsManagementCard() {
       </div>
       <div className="grid grid-cols-2 gap-2.5">
         {[
-          { label: "미처리",  count: "114", color: "text-stone-100"  },
-          { label: "진행 중", count: "62",  color: "text-amber-400"  },
-          { label: "실패",    count: "47",  color: "text-red-400"    },
-          { label: "성공",    count: "38",  color: "text-emerald-400"},
+          { label: "미처리", count: "114", color: "text-stone-100" },
+          { label: "진행 중", count: "62", color: "text-amber-400" },
+          { label: "실패", count: "47", color: "text-red-400" },
+          { label: "성공", count: "38", color: "text-emerald-400" },
         ].map(({ label, count, color }) => (
           <div key={label} className="rounded-lg border border-stone-700/50 bg-stone-900/50 p-3">
             <p className="mb-1 text-[10px] text-stone-500">{label}</p>
@@ -376,12 +453,22 @@ function RetentionRateCard() {
         </div>
       </div>
       <ResponsiveContainer width="100%" height={120}>
-        <BarChart data={retentionData} barSize={5} barGap={2} margin={{ top: 0, right: 0, bottom: 0, left: -28 }}>
-          <XAxis dataKey="m" tick={{ fontSize: 9, fill: "#78716c" }} axisLine={false} tickLine={false} />
+        <BarChart
+          data={retentionData}
+          barSize={5}
+          barGap={2}
+          margin={{ top: 0, right: 0, bottom: 0, left: -28 }}
+        >
+          <XAxis
+            dataKey="m"
+            tick={{ fontSize: 9, fill: "#78716c" }}
+            axisLine={false}
+            tickLine={false}
+          />
           <Tooltip {...TT} cursor={{ fill: "rgba(255,255,255,0.03)" }} />
-          <Bar dataKey="sme"     fill="#ef4444" radius={[2, 2, 0, 0]} />
+          <Bar dataKey="sme" fill="#ef4444" radius={[2, 2, 0, 0]} />
           <Bar dataKey="startup" fill="#f59e0b" radius={[2, 2, 0, 0]} />
-          <Bar dataKey="ent"     fill="#78716c" radius={[2, 2, 0, 0]} />
+          <Bar dataKey="ent" fill="#78716c" radius={[2, 2, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </Card>
@@ -400,12 +487,16 @@ function TeamActivityCard() {
       <div className="space-y-4">
         {TEAM_ACTIVITY.map((item, i) => {
           const config =
-            item.icon === "calendar" ? { Icon: Calendar, cls: "text-red-400 bg-red-500/10"     } :
-            item.icon === "mail"     ? { Icon: Mail,     cls: "text-amber-400 bg-amber-500/10" } :
-                                       { Icon: Phone,    cls: "text-stone-300 bg-stone-700/40" };
+            item.icon === "calendar"
+              ? { Icon: Calendar, cls: "text-red-400 bg-red-500/10" }
+              : item.icon === "mail"
+                ? { Icon: Mail, cls: "text-amber-400 bg-amber-500/10" }
+                : { Icon: Phone, cls: "text-stone-300 bg-stone-700/40" };
           return (
             <div key={i} className="flex items-center gap-3">
-              <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${config.cls}`}>
+              <div
+                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${config.cls}`}
+              >
                 <config.Icon className="h-4 w-4" />
               </div>
               <div className="min-w-0 flex-1">
@@ -463,7 +554,11 @@ function EmailComposeCard() {
         body: JSON.stringify({ to, subject, body }),
       });
       setSendState(res.ok ? "success" : "error");
-      if (res.ok) { setTo(""); setSubject(""); setBody(""); }
+      if (res.ok) {
+        setTo("");
+        setSubject("");
+        setBody("");
+      }
     } catch {
       setSendState("error");
     }
@@ -499,10 +594,22 @@ function EmailComposeCard() {
             className="flex items-center gap-1.5 rounded-lg border border-stone-600/70 bg-stone-800/60 px-3 py-1.5 text-[11px] text-stone-300 transition-colors hover:bg-stone-700/60"
           >
             <svg className="h-3.5 w-3.5" viewBox="0 0 24 24">
-              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+              <path
+                fill="#4285F4"
+                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+              />
+              <path
+                fill="#34A853"
+                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+              />
+              <path
+                fill="#FBBC05"
+                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+              />
+              <path
+                fill="#EA4335"
+                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+              />
             </svg>
             Google 주소록 연동
           </button>
@@ -614,7 +721,10 @@ function TelegramComposeCard() {
         body: JSON.stringify({ chatId, message }),
       });
       setSendState(res.ok ? "success" : "error");
-      if (res.ok) { setChatId(""); setMessage(""); }
+      if (res.ok) {
+        setChatId("");
+        setMessage("");
+      }
     } catch {
       setSendState("error");
     }
@@ -709,16 +819,16 @@ function ReceiverPanel() {
     }
   };
 
-  useEffect(() => { fetchEmails(); }, []);
+  useEffect(() => {
+    fetchEmails();
+  }, []);
 
   const openEmail = async (email: ReceiverEmail) => {
     setSelected(email);
     if (!email.is_read) {
       const res = await fetch(`/api/receiver/${email.id}/read`, { method: "PATCH" });
       if (res.ok) {
-        setEmails((prev) =>
-          prev.map((e) => (e.id === email.id ? { ...e, is_read: true } : e))
-        );
+        setEmails((prev) => prev.map((e) => (e.id === email.id ? { ...e, is_read: true } : e)));
       }
     }
   };
@@ -752,9 +862,7 @@ function ReceiverPanel() {
             <Loader2 className="h-5 w-5 animate-spin text-stone-500" />
           </div>
         ) : emails.length === 0 ? (
-          <div className="py-12 text-center text-[11px] text-stone-600">
-            받은 메일이 없습니다.
-          </div>
+          <div className="py-12 text-center text-[11px] text-stone-600">받은 메일이 없습니다.</div>
         ) : (
           <ul className="divide-y divide-stone-800 overflow-y-auto max-h-[600px]">
             {emails.map((email) => (
@@ -771,16 +879,23 @@ function ReceiverPanel() {
                       {!email.is_read && (
                         <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-red-500" />
                       )}
-                      <span className={`truncate text-xs ${email.is_read ? "text-stone-400" : "font-semibold text-stone-100"}`}>
+                      <span
+                        className={`truncate text-xs ${email.is_read ? "text-stone-400" : "font-semibold text-stone-100"}`}
+                      >
                         {email.from_name || email.from_email}
                       </span>
                     </div>
-                    <p className={`mt-0.5 truncate text-[11px] ${email.is_read ? "text-stone-600" : "text-stone-300"}`}>
+                    <p
+                      className={`mt-0.5 truncate text-[11px] ${email.is_read ? "text-stone-600" : "text-stone-300"}`}
+                    >
                       {email.subject || "(제목 없음)"}
                     </p>
                   </div>
                   <span className="shrink-0 text-[10px] text-stone-600">
-                    {new Date(email.receiver_at).toLocaleDateString("ko-KR", { month: "short", day: "numeric" })}
+                    {new Date(email.receiver_at).toLocaleDateString("ko-KR", {
+                      month: "short",
+                      day: "numeric",
+                    })}
                   </span>
                 </div>
               </li>
@@ -799,7 +914,11 @@ function ReceiverPanel() {
               </h3>
               <div className="flex items-center gap-2 text-[11px] text-stone-500">
                 <MailOpen className="h-3.5 w-3.5" />
-                <span>{selected.from_name ? `${selected.from_name} <${selected.from_email}>` : selected.from_email}</span>
+                <span>
+                  {selected.from_name
+                    ? `${selected.from_name} <${selected.from_email}>`
+                    : selected.from_email}
+                </span>
                 <span>·</span>
                 <span>{new Date(selected.receiver_at).toLocaleString("ko-KR")}</span>
               </div>
@@ -835,7 +954,9 @@ function AddressBookPanel() {
     } catch {}
   };
 
-  useEffect(() => { fetchContacts(); }, []);
+  useEffect(() => {
+    fetchContacts();
+  }, []);
 
   const handleUploadClose = (open: boolean) => {
     setUploadOpen(open);
@@ -896,15 +1017,9 @@ function AddressBookPanel() {
           {contacts.map((c) => (
             <li key={c.id} className="flex flex-col gap-0.5 py-2.5">
               <span className="text-[12px] font-medium text-stone-100">{c.name}</span>
-              {c.org_name && (
-                <span className="text-[10px] text-stone-400">{c.org_name}</span>
-              )}
-              {c.email && (
-                <span className="text-[10px] text-stone-500">{c.email}</span>
-              )}
-              {c.phone && (
-                <span className="text-[10px] text-stone-500">{c.phone}</span>
-              )}
+              {c.org_name && <span className="text-[10px] text-stone-400">{c.org_name}</span>}
+              {c.email && <span className="text-[10px] text-stone-500">{c.email}</span>}
+              {c.phone && <span className="text-[10px] text-stone-500">{c.phone}</span>}
             </li>
           ))}
         </ul>
@@ -931,7 +1046,6 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#0a0a0c] text-stone-900 dark:text-stone-100">
-
       {/* 서브 내비게이션 */}
       <div className="border-b border-stone-200/80 dark:border-white/10 bg-white dark:bg-[#0a0a0c]">
         <div className="mx-auto max-w-7xl px-3">
@@ -957,7 +1071,6 @@ export default function AdminDashboard() {
 
       {/* 메인 콘텐츠 */}
       <main className="mx-auto max-w-7xl px-3 py-4 sm:px-5 sm:py-5 lg:px-6 lg:py-6">
-
         {activeTab === "이메일" ? (
           <>
             <div className="mb-4 flex items-center justify-between">
@@ -972,7 +1085,13 @@ export default function AdminDashboard() {
                         : "border border-transparent text-stone-400 hover:bg-stone-800/60 hover:text-stone-200"
                     }`}
                   >
-                    {t === "이메일" ? <Mail className="h-3.5 w-3.5" /> : t === "텔레그램" ? <SendHorizonal className="h-3.5 w-3.5" /> : <Inbox className="h-3.5 w-3.5" />}
+                    {t === "이메일" ? (
+                      <Mail className="h-3.5 w-3.5" />
+                    ) : t === "텔레그램" ? (
+                      <SendHorizonal className="h-3.5 w-3.5" />
+                    ) : (
+                      <Inbox className="h-3.5 w-3.5" />
+                    )}
                     {t}
                   </button>
                 ))}
@@ -993,7 +1112,13 @@ export default function AdminDashboard() {
               )}
             </div>
             {emailSubTab === "이메일" ? (
-              <div className={showAddressBook ? "grid grid-cols-1 items-start gap-4 lg:grid-cols-[1fr_300px]" : ""}>
+              <div
+                className={
+                  showAddressBook
+                    ? "grid grid-cols-1 items-start gap-4 lg:grid-cols-[1fr_300px]"
+                    : ""
+                }
+              >
                 <EmailComposeCard />
                 {showAddressBook && <AddressBookPanel />}
               </div>

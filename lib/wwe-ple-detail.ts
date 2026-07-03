@@ -102,7 +102,7 @@ export const PLE_EVENT_DETAILS: Record<PleSlug, PleEventDetail> = {
     ],
     predictionFocus: ["NXT 챔피언 방어", "태그/여성 타이틀", "콜업 각성"],
   },
-  "wrestlemania": {
+  wrestlemania: {
     slug: "wrestlemania",
     tagline: "스포츠 엔터테인먼트의 슈퍼볼",
     layout: "mania",
@@ -123,7 +123,7 @@ export const PLE_EVENT_DETAILS: Record<PleSlug, PleEventDetail> = {
     ],
     predictionFocus: ["메인 이벤트 승자", "스틸 케이지/노 DQ", "서프라이즈 등장", "챔피언십 변동"],
   },
-  "backlash": {
+  backlash: {
     slug: "backlash",
     tagline: "WrestleMania 여파, 즉각적인 리벤지와 새 라이벌",
     layout: "fallout",
@@ -186,7 +186,7 @@ export const PLE_EVENT_DETAILS: Record<PleSlug, PleEventDetail> = {
     ],
     predictionFocus: ["킹 우승", "퀸 우승", "결승 조합", "준결승 이변"],
   },
-  "summerslam": {
+  summerslam: {
     slug: "summerslam",
     tagline: "여름의 Big 4, 라이벌의 정면 충돌",
     layout: "summer",
@@ -243,11 +243,7 @@ export const PLE_EVENT_DETAILS: Record<PleSlug, PleEventDetail> = {
         detail: "Brock Lesnar vs Oba Femi",
       },
     ],
-    predictionFocus: [
-      "Undisputed·WHC 방어",
-      "여자 챔피언십 2장",
-      "레스너·페미 리매치",
-    ],
+    predictionFocus: ["Undisputed·WHC 방어", "여자 챔피언십 2장", "레스너·페미 리매치"],
   },
   "night-of-champions": {
     slug: "night-of-champions",
@@ -268,7 +264,12 @@ export const PLE_EVENT_DETAILS: Record<PleSlug, PleEventDetail> = {
       { title: "킹 & 퀸 결승", detail: "Jey Uso vs Oba Femi / IYO SKY vs Liv Morgan" },
       { title: "스틸 케이지", detail: "Seth Rollins vs Bron Breakker" },
     ],
-    predictionFocus: ["Undisputed 챔피언 방어", "킹·퀸 우승자", "여자 US 타이틀 변동", "케이지 매치 승자"],
+    predictionFocus: [
+      "Undisputed 챔피언 방어",
+      "킹·퀸 우승자",
+      "여자 US 타이틀 변동",
+      "케이지 매치 승자",
+    ],
   },
   "bad-blood": {
     slug: "bad-blood",

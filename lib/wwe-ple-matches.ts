@@ -51,7 +51,7 @@ function m2(
   cardVariant: "sideA" | "sideB",
   left: PleCompetitor,
   right: PleCompetitor,
-  odds: { left: number; right: number }
+  odds: { left: number; right: number },
 ): PleMatchCardSingles {
   return {
     id,
@@ -69,7 +69,7 @@ function mm(
   title: string,
   cardVariant: "sideA" | "sideB",
   competitors: PleCompetitor[],
-  odds?: number[]
+  odds?: number[],
 ): PleMatchCardMulti {
   return {
     id,
@@ -87,14 +87,14 @@ function rumbleWinner(
   title: string,
   cardVariant: "sideA" | "sideB",
   topFive: [string, string, string, string, string],
-  odds: [number, number, number, number, number, number]
+  odds: [number, number, number, number, number, number],
 ): PleMatchCardMulti {
   return mm(
     id,
     title,
     cardVariant,
     [...topFive.map((name) => ({ name })), { name: BRACKET_LABELS.rumbleOther }],
-    [...odds]
+    [...odds],
   );
 }
 
@@ -106,7 +106,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Gunther" },
       { name: "AJ Styles" },
-      { left: 1.45, right: 2.75 }
+      { left: 1.45, right: 2.75 },
     ),
     m2(
       "rr26-undisputed",
@@ -114,21 +114,21 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Drew McIntyre", isChampion: true },
       { name: "Sami Zayn" },
-      { left: 1.5, right: 2.55 }
+      { left: 1.5, right: 2.55 },
     ),
     rumbleWinner(
       "rr26-women-rumble",
       "Women's Royal Rumble Match",
       "sideA",
       ["Charlotte Flair", "Liv Morgan", "Tiffany Stratton", "Rhea Ripley", "Becky Lynch"],
-      [4.5, 5.5, 6.0, 8.0, 9.5, 12.0]
+      [4.5, 5.5, 6.0, 8.0, 9.5, 12.0],
     ),
     rumbleWinner(
       "rr26-men-rumble",
       "Men's Royal Rumble Match",
       "sideB",
       ["Roman Reigns", "CM Punk", "John Cena", "Logan Paul", "Jey Uso"],
-      [3.5, 4.5, 6.0, 8.0, 10.0, 14.0]
+      [3.5, 4.5, 6.0, 8.0, 10.0, 14.0],
     ),
   ],
 
@@ -145,7 +145,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
         { name: "Kiana James" },
         { name: "Alexa Bliss" },
       ],
-      [2.4, 3.2, 4.5, 5.0, 8.0, 6.5]
+      [2.4, 3.2, 4.5, 5.0, 8.0, 6.5],
     ),
     m2(
       "ec26-women-ic",
@@ -153,7 +153,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "AJ Lee" },
       { name: "Becky Lynch", isChampion: true },
-      { left: 2.0, right: 1.8 }
+      { left: 2.0, right: 1.8 },
     ),
     m2(
       "ec26-whc",
@@ -161,7 +161,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "CM Punk", isChampion: true },
       { name: "Finn Bálor" },
-      { left: 1.55, right: 2.45 }
+      { left: 1.55, right: 2.45 },
     ),
     mm(
       "ec26-men",
@@ -175,7 +175,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
         { name: "Trick Williams" },
         { name: "Je'Von Evans" },
       ],
-      [3.5, 2.8, 5.0, 4.0, 6.0, 7.5]
+      [3.5, 2.8, 5.0, 4.0, 6.0, 7.5],
     ),
   ],
 
@@ -186,7 +186,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Sinclair, Hank & Tank, EK Prosper, Shiloh Hill" },
       { name: "BirthRight" },
-      { left: 1.75, right: 2.05 }
+      { left: 1.75, right: 2.05 },
     ),
     m2(
       "sad26-sol-zaria",
@@ -194,7 +194,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Sol Ruca" },
       { name: "Zaria" },
-      { left: 1.85, right: 1.95 }
+      { left: 1.85, right: 1.95 },
     ),
     m2(
       "sad26-women-na",
@@ -202,7 +202,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Tatum Paxley", isChampion: true },
       { name: "Blake Monroe" },
-      { left: 1.5, right: 2.6 }
+      { left: 1.5, right: 2.6 },
     ),
     m2(
       "sad26-na",
@@ -210,7 +210,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Myles Borne", isChampion: true },
       { name: "Johnny Gargano" },
-      { left: 1.65, right: 2.25 }
+      { left: 1.65, right: 2.25 },
     ),
     m2(
       "sad26-tag",
@@ -218,18 +218,14 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "The Vanity Project", isChampion: true },
       { name: "Los Americanos" },
-      { left: 1.7, right: 2.15 }
+      { left: 1.7, right: 2.15 },
     ),
     mm(
       "sad26-women",
       "NXT Women's Championship",
       "sideB",
-      [
-        { name: "Lola Vice" },
-        { name: "Jacy Jayne", isChampion: true },
-        { name: "Kendal Grey" },
-      ],
-      [2.5, 2.2, 4.0]
+      [{ name: "Lola Vice" }, { name: "Jacy Jayne", isChampion: true }, { name: "Kendal Grey" }],
+      [2.5, 2.2, 4.0],
     ),
     mm(
       "sad26-nxt",
@@ -241,7 +237,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
         { name: "Ricky Saints" },
         { name: "Ethan Page" },
       ],
-      [3.0, 2.4, 4.5, 5.5]
+      [3.0, 2.4, 4.5, 5.5],
     ),
   ],
 
@@ -252,7 +248,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "LA Knight & The Usos" },
       { name: "IShowSpeed & The Vision" },
-      { left: 1.85, right: 1.95 }
+      { left: 1.85, right: 1.95 },
     ),
     m2(
       "wm42-n1-unsanctioned",
@@ -260,7 +256,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Jacob Fatu" },
       { name: "Drew McIntyre" },
-      { left: 1.9, right: 1.92 }
+      { left: 1.9, right: 1.92 },
     ),
     mm(
       "wm42-n1-women-tag",
@@ -272,7 +268,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
         { name: "Alexa Bliss & Charlotte Flair" },
         { name: "Bayley & Lyra Valkyria" },
       ],
-      [4.0, 2.8, 5.0, 5.5]
+      [4.0, 2.8, 5.0, 5.5],
     ),
     m2(
       "wm42-n1-women-ic",
@@ -280,7 +276,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Becky Lynch" },
       { name: "AJ Lee", isChampion: true },
-      { left: 1.95, right: 1.88 }
+      { left: 1.95, right: 1.88 },
     ),
     m2(
       "wm42-n1-gunther-rollins",
@@ -288,7 +284,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Gunther" },
       { name: "Seth Rollins" },
-      { left: 1.6, right: 2.35 }
+      { left: 1.6, right: 2.35 },
     ),
     m2(
       "wm42-n1-women-world",
@@ -296,7 +292,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Liv Morgan" },
       { name: "Stephanie Vaquer", isChampion: true },
-      { left: 2.1, right: 1.75 }
+      { left: 2.1, right: 1.75 },
     ),
     m2(
       "wm42-n1-undisputed",
@@ -304,7 +300,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Cody Rhodes", isChampion: true },
       { name: "Randy Orton" },
-      { left: 1.55, right: 2.5 }
+      { left: 1.55, right: 2.5 },
     ),
     m2(
       "wm42-n2-femi-lesnar",
@@ -312,7 +308,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Oba Femi" },
       { name: "Brock Lesnar" },
-      { left: 2.4, right: 1.58 }
+      { left: 2.4, right: 1.58 },
     ),
     mm(
       "wm42-n2-ic-ladder",
@@ -326,7 +322,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
         { name: "Rusev" },
         { name: "JD McDonagh" },
       ],
-      [2.5, 4.0, 5.5, 6.0, 7.0, 8.5]
+      [2.5, 4.0, 5.5, 6.0, 7.0, 8.5],
     ),
     m2(
       "wm42-n2-us",
@@ -334,7 +330,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Trick Williams" },
       { name: "Sami Zayn", isChampion: true },
-      { left: 2.2, right: 1.68 }
+      { left: 2.2, right: 1.68 },
     ),
     m2(
       "wm42-n2-street",
@@ -342,7 +338,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Finn Bálor" },
       { name: "Dominik Mysterio" },
-      { left: 1.8, right: 2.0 }
+      { left: 1.8, right: 2.0 },
     ),
     m2(
       "wm42-n2-women",
@@ -350,7 +346,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Rhea Ripley" },
       { name: "Jade Cargill", isChampion: true },
-      { left: 2.3, right: 1.62 }
+      { left: 2.3, right: 1.62 },
     ),
     m2(
       "wm42-n2-whc",
@@ -358,7 +354,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Roman Reigns" },
       { name: "CM Punk", isChampion: true },
-      { left: 2.0, right: 1.8 }
+      { left: 2.0, right: 1.8 },
     ),
   ],
 
@@ -369,7 +365,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Danhausen & Minihausen" },
       { name: "The Miz & Kit Wilson" },
-      { left: 1.7, right: 2.15 }
+      { left: 1.7, right: 2.15 },
     ),
     m2(
       "bl26-iyo-asuka",
@@ -377,7 +373,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "IYO SKY" },
       { name: "Asuka" },
-      { left: 1.75, right: 2.1 }
+      { left: 1.75, right: 2.1 },
     ),
     m2(
       "bl26-us",
@@ -385,7 +381,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Trick Williams", isChampion: true },
       { name: "Sami Zayn" },
-      { left: 1.65, right: 2.25 }
+      { left: 1.65, right: 2.25 },
     ),
     m2(
       "bl26-breakker-rollins",
@@ -393,7 +389,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Bron Breakker" },
       { name: "Seth Rollins" },
-      { left: 1.9, right: 1.92 }
+      { left: 1.9, right: 1.92 },
     ),
     m2(
       "bl26-whc",
@@ -401,7 +397,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Roman Reigns", isChampion: true },
       { name: "Jacob Fatu" },
-      { left: 1.45, right: 2.75 }
+      { left: 1.45, right: 2.75 },
     ),
   ],
 
@@ -418,7 +414,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
         { name: "Roxanne Perez" },
         { name: "Giulia" },
       ],
-      [5.0, 4.0, 6.0, 7.0, 8.0, 9.0]
+      [5.0, 4.0, 6.0, 7.0, 8.0, 9.0],
     ),
     m2(
       "mitb26-ic",
@@ -426,7 +422,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Dominik Mysterio", isChampion: true },
       { name: "Octagón Jr." },
-      { left: 1.45, right: 2.75 }
+      { left: 1.45, right: 2.75 },
     ),
     m2(
       "mitb26-women-ic",
@@ -434,7 +430,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Becky Lynch" },
       { name: "Lyra Valkyria", isChampion: true },
-      { left: 1.9, right: 1.92 }
+      { left: 1.9, right: 1.92 },
     ),
     mm(
       "mitb26-men",
@@ -448,7 +444,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
         { name: "El Grande Americano" },
         { name: "Andrade" },
       ],
-      [5.5, 4.5, 7.0, 6.0, 10.0, 12.0]
+      [5.5, 4.5, 7.0, 6.0, 10.0, 12.0],
     ),
     m2(
       "mitb26-tag",
@@ -456,7 +452,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Rhodes & Jey Uso" },
       { name: "Cena & Logan Paul" },
-      { left: 1.85, right: 1.95 }
+      { left: 1.85, right: 1.95 },
     ),
   ],
 
@@ -465,12 +461,8 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "noc26-undisputed",
       "Undisputed WWE Championship",
       "sideA",
-      [
-        { name: "Cody Rhodes", isChampion: true },
-        { name: "Gunther" },
-        { name: "Sami Zayn" },
-      ],
-      [1.17, 7.0, 4.0]
+      [{ name: "Cody Rhodes", isChampion: true }, { name: "Gunther" }, { name: "Sami Zayn" }],
+      [1.17, 7.0, 4.0],
     ),
     m2(
       "noc26-kotr",
@@ -478,7 +470,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Jey Uso" },
       { name: "Oba Femi" },
-      { left: 1.77, right: 2.1 }
+      { left: 1.77, right: 2.1 },
     ),
     m2(
       "noc26-qotr",
@@ -486,7 +478,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "IYO SKY" },
       { name: "Liv Morgan" },
-      { left: 1.17, right: 4.5 }
+      { left: 1.17, right: 4.5 },
     ),
     m2(
       "noc26-women-us",
@@ -494,7 +486,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Jade Cargill" },
       { name: "Tiffany Stratton", isChampion: true },
-      { left: 1.77, right: 2.1 }
+      { left: 1.77, right: 2.1 },
     ),
     m2(
       "noc26-us",
@@ -502,7 +494,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Trick Williams", isChampion: true },
       { name: "Ricky Saints" },
-      { left: 1.03, right: 9.5 }
+      { left: 1.03, right: 9.5 },
     ),
     m2(
       "noc26-cage",
@@ -510,7 +502,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Seth Rollins" },
       { name: "Bron Breakker" },
-      { left: 1.83, right: 1.83 }
+      { left: 1.83, right: 1.83 },
     ),
   ],
 
@@ -521,7 +513,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Cody Rhodes" },
       { name: "Randy Orton" },
-      { left: 1.7, right: 2.15 }
+      { left: 1.7, right: 2.15 },
     ),
     m2(
       "qotr26-final",
@@ -529,7 +521,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Jade Cargill" },
       { name: "Asuka" },
-      { left: 1.55, right: 2.45 }
+      { left: 1.55, right: 2.45 },
     ),
   ],
 
@@ -541,7 +533,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Roman Reigns", isChampion: true },
       { name: "Seth Rollins" },
-      { left: 1.9, right: 1.9 }
+      { left: 1.9, right: 1.9 },
     ),
     m2(
       "ss26-women-world",
@@ -549,7 +541,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Liv Morgan", isChampion: true },
       { name: "IYO SKY" },
-      { left: 1.9, right: 1.9 }
+      { left: 1.9, right: 1.9 },
     ),
     m2(
       "ss26-hiac",
@@ -557,7 +549,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Brock Lesnar" },
       { name: "Oba Femi" },
-      { left: 1.9, right: 1.9 }
+      { left: 1.9, right: 1.9 },
     ),
   ],
 
@@ -569,7 +561,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Cody Rhodes", isChampion: true },
       { name: "Gunther" },
-      { left: 1.55, right: 2.35 }
+      { left: 1.55, right: 2.35 },
     ),
     m2(
       "italy26-whc-tribal",
@@ -577,7 +569,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Roman Reigns", isChampion: true },
       { name: "Jacob Fatu" },
-      { left: 1.65, right: 2.2 }
+      { left: 1.65, right: 2.2 },
     ),
     m2(
       "italy26-women",
@@ -585,7 +577,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Rhea Ripley", isChampion: true },
       { name: "Jade Cargill" },
-      { left: 1.58, right: 2.3 }
+      { left: 1.58, right: 2.3 },
     ),
     m2(
       "italy26-women-ic",
@@ -593,7 +585,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Becky Lynch", isChampion: true },
       { name: "Sol Ruca" },
-      { left: 1.62, right: 2.25 }
+      { left: 1.62, right: 2.25 },
     ),
     m2(
       "italy26-lesnar-femi",
@@ -601,7 +593,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Brock Lesnar" },
       { name: "Oba Femi" },
-      { left: 1.72, right: 2.05 }
+      { left: 1.72, right: 2.05 },
     ),
   ],
 
@@ -612,7 +604,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "CM Punk" },
       { name: "Drew McIntyre" },
-      { left: 1.85, right: 1.95 }
+      { left: 1.85, right: 1.95 },
     ),
     m2(
       "bb26-women",
@@ -620,7 +612,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Nia Jax", isChampion: true },
       { name: "Bayley" },
-      { left: 1.5, right: 2.6 }
+      { left: 1.5, right: 2.6 },
     ),
     m2(
       "bb26-priest-balor",
@@ -628,7 +620,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Damian Priest" },
       { name: "Finn Bálor" },
-      { left: 1.8, right: 2.0 }
+      { left: 1.8, right: 2.0 },
     ),
     m2(
       "bb26-women-world",
@@ -636,7 +628,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Rhea Ripley" },
       { name: "Liv Morgan", isChampion: true },
-      { left: 2.1, right: 1.72 }
+      { left: 2.1, right: 1.72 },
     ),
     m2(
       "bb26-tag",
@@ -644,7 +636,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Rhodes & Reigns" },
       { name: "Sikoa & Fatu" },
-      { left: 1.7, right: 2.15 }
+      { left: 1.7, right: 2.15 },
     ),
   ],
 
@@ -659,7 +651,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       {
         name: "Team Lynch — Becky, Asuka, Kairi, Nia Jax, Lash Legend",
       },
-      { left: 1.85, right: 1.95 }
+      { left: 1.85, right: 1.95 },
     ),
     m2(
       "ss26-ic",
@@ -667,7 +659,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideB",
       { name: "Dominik Mysterio" },
       { name: "John Cena", isChampion: true },
-      { left: 2.4, right: 1.58 }
+      { left: 2.4, right: 1.58 },
     ),
     m2(
       "ss26-women-world",
@@ -675,7 +667,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sideA",
       { name: "Stephanie Vaquer", isChampion: true },
       { name: "Nikki Bella" },
-      { left: 1.55, right: 2.45 }
+      { left: 1.55, right: 2.45 },
     ),
     m2(
       "ss26-men-wg",
@@ -687,7 +679,7 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       {
         name: "Team Rhodes — Punk, Cody, Roman, Jey Uso, Jimmy Uso",
       },
-      { left: 2.2, right: 1.75 }
+      { left: 2.2, right: 1.75 },
     ),
   ],
 };

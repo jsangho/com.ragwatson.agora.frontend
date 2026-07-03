@@ -137,7 +137,7 @@ function NameChip({ name, highlight }: { name: string; highlight?: boolean }) {
         "inline-flex rounded-lg border px-2 py-0.5 text-[11px] font-semibold",
         highlight
           ? "border-amber-600/50 bg-amber-950/30 text-amber-100"
-          : "border-stone-300/70 dark:border-stone-700/70 bg-stone-100/40 dark:bg-stone-950/40 text-stone-700 dark:text-stone-200"
+          : "border-stone-300/70 dark:border-stone-700/70 bg-stone-100/40 dark:bg-stone-950/40 text-stone-700 dark:text-stone-200",
       )}
     >
       {name}
@@ -153,15 +153,14 @@ function MatchRecordCard({
   competitorName: string;
 }) {
   const opponents = match.opponents ?? [];
-  const showParticipants =
-    match.format === "multi" && (match.participants?.length ?? 0) > 0;
+  const showParticipants = match.format === "multi" && (match.participants?.length ?? 0) > 0;
   const isTitle = isTitleMatchTitle(match.title);
 
   return (
     <li
       className={cn(
         "rounded-xl border border-stone-200/80 dark:border-stone-800/80 border-l-4 bg-stone-100/30 dark:bg-stone-950/30 p-4",
-        accentClass(match.result)
+        accentClass(match.result),
       )}
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -182,7 +181,9 @@ function MatchRecordCard({
             ) : null}
           </div>
 
-          <h3 className="text-base font-bold leading-snug text-stone-900 dark:text-stone-50">{match.title}</h3>
+          <h3 className="text-base font-bold leading-snug text-stone-900 dark:text-stone-50">
+            {match.title}
+          </h3>
 
           {opponents.length > 0 ? (
             <div>
@@ -212,8 +213,7 @@ function MatchRecordCard({
 
           {match.winnerName ? (
             <p className="text-xs font-medium text-stone-400">
-              승자{" "}
-              <span className="font-semibold text-emerald-200">{match.winnerName}</span>
+              승자 <span className="font-semibold text-emerald-200">{match.winnerName}</span>
             </p>
           ) : null}
         </div>
@@ -221,7 +221,7 @@ function MatchRecordCard({
         <span
           className={cn(
             "shrink-0 rounded-full border px-3 py-1 text-xs font-extrabold",
-            badgeClass(match.result)
+            badgeClass(match.result),
           )}
         >
           {labelFor(match.result)}
@@ -281,7 +281,9 @@ export function CompetitorRecordView({
       <section className="rounded-2xl border border-amber-700/40 bg-amber-950/10 p-4">
         <div className="flex flex-wrap items-end justify-between gap-2">
           <div>
-            <h2 className="text-sm font-extrabold text-stone-900 dark:text-stone-50">역대 벨트 획득</h2>
+            <h2 className="text-sm font-extrabold text-stone-900 dark:text-stone-50">
+              역대 벨트 획득
+            </h2>
             <p className="mt-0.5 text-xs font-medium text-stone-400">
               실제 WWE 챔피언십 획득 {titleHistory.length}회
             </p>
@@ -314,9 +316,7 @@ export function CompetitorRecordView({
             <div className="rounded-xl border border-amber-800/40 bg-stone-950/20 p-3">
               <button
                 type="button"
-                onClick={() =>
-                  patchState({ titleHistoryOpen: !state.titleHistoryOpen })
-                }
+                onClick={() => patchState({ titleHistoryOpen: !state.titleHistoryOpen })}
                 aria-expanded={state.titleHistoryOpen}
                 aria-controls="title-acquisition-history"
                 className="flex w-full items-center justify-between gap-2 rounded-lg text-left transition-colors hover:bg-stone-950/30"
@@ -330,16 +330,13 @@ export function CompetitorRecordView({
                 <ChevronDown
                   className={cn(
                     "h-4 w-4 shrink-0 text-amber-200/70 transition-transform duration-200",
-                    state.titleHistoryOpen && "rotate-180"
+                    state.titleHistoryOpen && "rotate-180",
                   )}
                   aria-hidden
                 />
               </button>
               {state.titleHistoryOpen ? (
-                <ul
-                  id="title-acquisition-history"
-                  className="mt-2 space-y-2"
-                >
+                <ul id="title-acquisition-history" className="mt-2 space-y-2">
                   {titleHistory.map((h, idx) => (
                     <li
                       key={`${h.beltName}:${h.wonAt}:${h.matchKey ?? idx}`}
@@ -349,9 +346,7 @@ export function CompetitorRecordView({
                         <span className="text-sm font-semibold text-stone-800 dark:text-stone-100">
                           {h.beltName}
                         </span>
-                        <span className="text-xs font-medium text-stone-400">
-                          {h.wonAt}
-                        </span>
+                        <span className="text-xs font-medium text-stone-400">{h.wonAt}</span>
                       </div>
                     </li>
                   ))}
@@ -382,7 +377,9 @@ export function CompetitorRecordView({
         <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-6">
           <div className="rounded-xl border border-stone-200/70 dark:border-stone-700/70 bg-stone-100/30 dark:bg-stone-950/30 px-3 py-2">
             <div className="text-[11px] font-bold text-stone-400">총</div>
-            <div className="text-sm font-extrabold text-stone-800 dark:text-stone-50">{profile.summary.total}</div>
+            <div className="text-sm font-extrabold text-stone-800 dark:text-stone-50">
+              {profile.summary.total}
+            </div>
           </div>
           <div className="rounded-xl border border-emerald-700/60 bg-emerald-950/20 px-3 py-2">
             <div className="text-[11px] font-bold text-emerald-200/80">승</div>
@@ -398,7 +395,9 @@ export function CompetitorRecordView({
           </div>
           <div className="rounded-xl border border-stone-200/70 dark:border-stone-700/70 bg-stone-100/30 dark:bg-stone-950/30 px-3 py-2">
             <div className="text-[11px] font-bold text-stone-400">대기</div>
-            <div className="text-sm font-extrabold text-stone-800 dark:text-stone-50">{profile.summary.pending}</div>
+            <div className="text-sm font-extrabold text-stone-800 dark:text-stone-50">
+              {profile.summary.pending}
+            </div>
           </div>
           <div className="rounded-xl border border-stone-200/70 dark:border-stone-700/70 bg-stone-100/30 dark:bg-stone-950/30 px-3 py-2">
             <div className="text-[11px] font-bold text-stone-400">챔피언 출전</div>
@@ -440,7 +439,7 @@ export function CompetitorRecordView({
             placeholder="검색 (PLE/경기/상대/키워드)"
             className={cn(
               "h-10 w-full rounded-xl border border-stone-200/70 dark:border-stone-700/70 bg-stone-100/40 dark:bg-stone-950/40 px-3 text-sm text-stone-900 dark:text-stone-100",
-              "placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-stone-500/40"
+              "placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-stone-500/40",
             )}
           />
           <select
@@ -469,9 +468,7 @@ export function CompetitorRecordView({
       <section className="rounded-2xl border border-stone-200/70 dark:border-stone-700/70 bg-stone-50/40 dark:bg-stone-950/40 p-4">
         <div className="mb-4">
           <h2 className="text-sm font-extrabold text-stone-50">경기 기록</h2>
-          <p className="mt-0.5 text-xs font-medium text-stone-400">
-            필터 결과 {filtered.length}건
-          </p>
+          <p className="mt-0.5 text-xs font-medium text-stone-400">필터 결과 {filtered.length}건</p>
         </div>
 
         {filtered.length === 0 ? (
@@ -483,7 +480,9 @@ export function CompetitorRecordView({
             {grouped.map((g) => (
               <div key={`${g.slug}:${g.pleLabel}`}>
                 <div className="mb-3 flex items-center gap-2">
-                  <span className="text-sm font-extrabold text-stone-800 dark:text-stone-100">{g.pleLabel}</span>
+                  <span className="text-sm font-extrabold text-stone-800 dark:text-stone-100">
+                    {g.pleLabel}
+                  </span>
                   <span className="rounded-md border border-stone-200/60 dark:border-stone-700/60 bg-stone-100/50 dark:bg-stone-900/50 px-2 py-0.5 text-[10px] font-bold text-stone-400">
                     {g.slug}
                   </span>

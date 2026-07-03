@@ -1,4 +1,9 @@
-import { pleEventsBaseUrl, pleMatchesBaseUrl, pleMatchPicksBaseUrl, requestTimeoutMs } from "@/lib/api";
+import {
+  pleEventsBaseUrl,
+  pleMatchesBaseUrl,
+  pleMatchPicksBaseUrl,
+  requestTimeoutMs,
+} from "@/lib/api";
 import type { PleMatchCard } from "@/lib/wwe-ple-matches";
 import type { PleSlug } from "@/lib/wwe-ple";
 import { getPleBySlug } from "@/lib/wwe-ple";
@@ -102,7 +107,7 @@ export type FetchPleBoardOptions = {
 
 export async function fetchPleBoard(
   slug: PleSlug,
-  options?: FetchPleBoardOptions | string
+  options?: FetchPleBoardOptions | string,
 ): Promise<PleBoard | null> {
   const opts: FetchPleBoardOptions =
     typeof options === "string" ? { clientId: options } : (options ?? {});
@@ -127,9 +132,7 @@ function parseApiErrorDetail(err: unknown, fallback: string): string {
     if (Array.isArray(detail)) {
       return detail
         .map((d) =>
-          typeof d === "object" && d && "msg" in d
-            ? String((d as { msg: string }).msg)
-            : String(d)
+          typeof d === "object" && d && "msg" in d ? String((d as { msg: string }).msg) : String(d),
         )
         .join(", ");
     }
@@ -147,21 +150,18 @@ export type MatchResultPayload = {
 export async function submitPleMatchResult(
   slug: PleSlug,
   matchKey: string,
-  body: MatchResultPayload
+  body: MatchResultPayload,
 ): Promise<PleBoard> {
-  const res = await fetch(
-    `${pleMatchesBaseUrl}/${slug}/matches/${matchKey}/result`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        winnerSide: body.winnerSide,
-        winnerIndex: body.winnerIndex,
-        winnerName: body.winnerName,
-        status: body.status ?? "finished",
-      }),
-    }
-  );
+  const res = await fetch(`${pleMatchesBaseUrl}/${slug}/matches/${matchKey}/result`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      winnerSide: body.winnerSide,
+      winnerIndex: body.winnerIndex,
+      winnerName: body.winnerName,
+      status: body.status ?? "finished",
+    }),
+  });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
     throw new Error(parseApiErrorDetail(err, res.statusText));
@@ -169,10 +169,7 @@ export async function submitPleMatchResult(
   return res.json();
 }
 
-export async function linkPlePredictions(
-  clientId: string,
-  userId: number
-): Promise<number | null> {
+export async function linkPlePredictions(clientId: string, userId: number): Promise<number | null> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), requestTimeoutMs);
   try {
@@ -201,7 +198,7 @@ export async function submitPlePredictionsBatch(
   slug: PleSlug,
   clientId: string,
   predictions: BatchPredictionItem[],
-  userId: number
+  userId: number,
 ): Promise<PleBoard> {
   const res = await fetch(`${pleMatchPicksBaseUrl}/${slug}/predictions/batch`, {
     method: "POST",
@@ -229,7 +226,7 @@ export type BatchResultItem = {
 
 export async function submitPleResultsBatch(
   slug: PleSlug,
-  results: BatchResultItem[]
+  results: BatchResultItem[],
 ): Promise<PleBoard> {
   const res = await fetch(`${pleMatchesBaseUrl}/${slug}/results/batch`, {
     method: "POST",
@@ -248,7 +245,7 @@ export async function submitPlePrediction(
   matchKey: string,
   pick: string,
   clientId: string,
-  userId: number
+  userId: number,
 ): Promise<PleBoard> {
   const res = await fetch(`${pleMatchPicksBaseUrl}/${slug}/matches/${matchKey}/predict`, {
     method: "POST",
@@ -269,7 +266,7 @@ export async function submitPlePrediction(
 export async function setPleMatchResult(
   slug: PleSlug,
   matchKey: string,
-  payload: PleMatchResult
+  payload: PleMatchResult,
 ): Promise<PleBoard> {
   const res = await fetch(`${pleMatchesBaseUrl}/${slug}/matches/${matchKey}/result`, {
     method: "POST",
@@ -288,7 +285,7 @@ export function subscribePleLive(
   clientId: string,
   onBoard: (board: PleBoard) => void,
   onError?: (err: unknown) => void,
-  userId?: number
+  userId?: number,
 ): () => void {
   const params = new URLSearchParams({ client_id: clientId });
   if (userId != null) params.set("user_id", String(userId));

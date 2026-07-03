@@ -9,12 +9,7 @@ export const TIER_LABELS: Record<ChampionshipTier, string> = {
   other: "그 외",
 };
 
-export const TIER_ORDER: ChampionshipTier[] = [
-  "main",
-  "secondary",
-  "tag",
-  "other",
-];
+export const TIER_ORDER: ChampionshipTier[] = ["main", "secondary", "tag", "other"];
 
 export function formatChampionshipDate(iso: string): string {
   const [y, m, d] = iso.split("-").map(Number);

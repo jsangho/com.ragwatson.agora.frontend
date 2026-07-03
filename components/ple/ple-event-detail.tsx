@@ -2,11 +2,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import type { PleEventDetail, PleLayoutVariant } from "@/lib/wwe-ple-detail";
 import type { PleSlug } from "@/lib/wwe-ple";
-import {
-  formatPleMonth,
-  formatPleSchedule,
-  WWE_PLE_MONTHLY_ORDER,
-} from "@/lib/wwe-ple";
+import { formatPleMonth, formatPleSchedule, WWE_PLE_MONTHLY_ORDER } from "@/lib/wwe-ple";
 import { PleMatchBracket } from "@/components/ple/ple-match-bracket";
 import { WweArenaShell } from "@/components/wwe-arena-shell";
 
@@ -28,9 +24,7 @@ export function PleEventDetailView({ ple, detail }: PleEventDetailViewProps) {
   const idx = WWE_PLE_MONTHLY_ORDER.findIndex((e) => e.slug === ple.slug);
   const prev = idx > 0 ? WWE_PLE_MONTHLY_ORDER[idx - 1] : undefined;
   const next =
-    idx >= 0 && idx < WWE_PLE_MONTHLY_ORDER.length - 1
-      ? WWE_PLE_MONTHLY_ORDER[idx + 1]
-      : undefined;
+    idx >= 0 && idx < WWE_PLE_MONTHLY_ORDER.length - 1 ? WWE_PLE_MONTHLY_ORDER[idx + 1] : undefined;
 
   const bannerModifier = HERO_BANNER_CLASS[detail.layout];
 
@@ -64,16 +58,11 @@ export function PleEventDetailView({ ple, detail }: PleEventDetailViewProps) {
           </div>
         </nav>
 
-        <header
-          className={cn(
-            "ple-hero-banner p-6 sm:p-8",
-            bannerModifier
-          )}
-        >
+        <header className={cn("ple-hero-banner p-6 sm:p-8", bannerModifier)}>
           <span
             className={cn(
               "inline-flex rounded-full px-3 py-1 text-xs font-bold tracking-wide ring-1 ring-inset",
-              theme.badge
+              theme.badge,
             )}
           >
             {formatPleMonth(ple.month)} · {detail.signatureLabel}
@@ -84,12 +73,8 @@ export function PleEventDetailView({ ple, detail }: PleEventDetailViewProps) {
           <p className="font-kr-hero mt-3 text-lg text-stone-700 dark:text-stone-200 sm:text-xl">
             {detail.tagline}
           </p>
-          <p className="mt-4 text-sm leading-relaxed text-stone-500">
-            {formatPleSchedule(ple)}
-          </p>
-          <p className="mt-1 text-xs leading-relaxed text-stone-600">
-            {ple.highlight}
-          </p>
+          <p className="mt-4 text-sm leading-relaxed text-stone-500">{formatPleSchedule(ple)}</p>
+          <p className="mt-1 text-xs leading-relaxed text-stone-600">{ple.highlight}</p>
         </header>
 
         <PleMatchBracket slug={ple.slug as PleSlug} className="mt-8" />
@@ -142,7 +127,7 @@ function HighlightList({
           key={h.title}
           className={cn(
             "rounded-xl border border-stone-200/80 dark:border-white/8 bg-stone-100/40 dark:bg-white/[0.04] p-4 backdrop-blur-sm",
-            theme.border
+            theme.border,
           )}
         >
           <p className="font-semibold text-stone-700 dark:text-stone-200">{h.title}</p>

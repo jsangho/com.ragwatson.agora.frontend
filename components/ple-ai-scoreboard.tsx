@@ -3,11 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import {
-  fetchPleAiStats,
-  type PleAiRecord,
-  type PleAiStats,
-} from "@/lib/ple-ai-stats";
+import { fetchPleAiStats, type PleAiRecord, type PleAiStats } from "@/lib/ple-ai-stats";
 import { WWE_PLE_MONTHLY_ORDER } from "@/lib/wwe-ple";
 import { getPleMatches } from "@/lib/wwe-ple-matches";
 
@@ -48,15 +44,11 @@ function groupRecordsByPle(records: PleAiRecord[]): PleAiGroup[] {
     if (row.correct) group.correct += 1;
   }
 
-  const order = new Map(
-    WWE_PLE_MONTHLY_ORDER.map((e, i) => [e.slug, i] as const)
-  );
+  const order = new Map(WWE_PLE_MONTHLY_ORDER.map((e, i) => [e.slug, i] as const));
 
   return [...map.values()]
     .map((group) => {
-      const cardOrder = new Map(
-        getPleMatches(group.slug).map((m, i) => [m.id, i] as const)
-      );
+      const cardOrder = new Map(getPleMatches(group.slug).map((m, i) => [m.id, i] as const));
       const rows = [...group.rows].sort((a, b) => {
         const ai = cardOrder.get(a.matchKey) ?? 999;
         const bi = cardOrder.get(b.matchKey) ?? 999;
@@ -79,7 +71,7 @@ function AiMatchRow({ row }: { row: PleAiRecord }) {
         "flex flex-col gap-1 rounded-lg border px-3 py-2.5 sm:flex-row sm:items-center sm:justify-between",
         row.correct
           ? "border-emerald-500/40 bg-emerald-50/60 dark:bg-emerald-950/25"
-          : "border-red-400/35 bg-red-50/60 dark:bg-red-950/20"
+          : "border-red-400/35 bg-red-50/60 dark:bg-red-950/20",
       )}
     >
       <p className="min-w-0 truncate text-sm font-semibold text-stone-800 dark:text-stone-100">
@@ -87,7 +79,8 @@ function AiMatchRow({ row }: { row: PleAiRecord }) {
       </p>
       <div className="flex shrink-0 flex-wrap items-center gap-2 text-xs sm:text-sm">
         <span className="text-stone-400">
-          AI: <span className="font-medium text-violet-700 dark:text-violet-200">{row.aiPickName}</span>
+          AI:{" "}
+          <span className="font-medium text-violet-700 dark:text-violet-200">{row.aiPickName}</span>
         </span>
         {row.winnerName && (
           <span className="text-stone-500">
@@ -99,7 +92,7 @@ function AiMatchRow({ row }: { row: PleAiRecord }) {
             "rounded-full px-2 py-0.5 text-[11px] font-bold",
             row.correct
               ? "bg-emerald-100 dark:bg-emerald-900/70 text-emerald-700 dark:text-emerald-300"
-              : "bg-red-100 dark:bg-red-900/60 text-red-700 dark:text-red-300"
+              : "bg-red-100 dark:bg-red-900/60 text-red-700 dark:text-red-300",
           )}
         >
           {row.correct ? "적중" : "실패"}
@@ -114,12 +107,11 @@ export function PleAiScoreboard() {
   const [loading, setLoading] = useState(true);
   const [ui, setUi] = useState<AiScoreboardUi>(initialUi);
 
-  const patchUi = (patch: Partial<AiScoreboardUi>) =>
-    setUi((prev) => ({ ...prev, ...patch }));
+  const patchUi = (patch: Partial<AiScoreboardUi>) => setUi((prev) => ({ ...prev, ...patch }));
 
   const pleGroups = useMemo(
     () => (stats?.recent.length ? groupRecordsByPle(stats.recent) : []),
-    [stats]
+    [stats],
   );
 
   useEffect(() => {
@@ -170,9 +162,7 @@ export function PleAiScoreboard() {
               <div className="flex gap-6 rounded-xl border border-stone-300/50 dark:border-stone-600/50 bg-stone-100/50 dark:bg-stone-900/50 px-5 py-3">
                 <div className="text-center">
                   <p className="text-2xl font-bold tabular-nums text-emerald-700 dark:text-emerald-300">
-                    {stats.accuracyPercent != null
-                      ? `${stats.accuracyPercent}%`
-                      : "—"}
+                    {stats.accuracyPercent != null ? `${stats.accuracyPercent}%` : "—"}
                   </p>
                   <p className="text-xs text-stone-500">적중률</p>
                 </div>
@@ -195,10 +185,7 @@ export function PleAiScoreboard() {
                 >
                   {ui.sectionOpen ? "접기" : "PLE별 기록 보기"}
                   <ChevronDown
-                    className={cn(
-                      "size-4 transition-transform",
-                      ui.sectionOpen && "rotate-180"
-                    )}
+                    className={cn("size-4 transition-transform", ui.sectionOpen && "rotate-180")}
                     aria-hidden
                   />
                 </button>
@@ -215,8 +202,8 @@ export function PleAiScoreboard() {
 
         {!loading && (!stats || stats.totalGraded === 0) && (
           <p className="border-t border-stone-200/50 dark:border-stone-700/50 px-5 py-6 text-center text-sm text-stone-500 sm:px-6">
-            아직 채점된 AI 예측이 없습니다. PLE 페이지에서 카드를 동기화하고 결과를
-            등록하면 기록이 쌓입니다.
+            아직 채점된 AI 예측이 없습니다. PLE 페이지에서 카드를 동기화하고 결과를 등록하면 기록이
+            쌓입니다.
           </p>
         )}
 
@@ -226,9 +213,7 @@ export function PleAiScoreboard() {
               {pleGroups.map((group) => {
                 const isOpen = ui.expandedSlug === group.slug;
                 const accuracy =
-                  group.total > 0
-                    ? Math.round((group.correct / group.total) * 100)
-                    : 0;
+                  group.total > 0 ? Math.round((group.correct / group.total) * 100) : 0;
                 return (
                   <li
                     key={group.slug}
@@ -252,7 +237,7 @@ export function PleAiScoreboard() {
                         <ChevronDown
                           className={cn(
                             "size-4 text-stone-500 transition-transform",
-                            isOpen && "rotate-180"
+                            isOpen && "rotate-180",
                           )}
                           aria-hidden
                         />
@@ -261,10 +246,7 @@ export function PleAiScoreboard() {
                     {isOpen && (
                       <ul className="space-y-1.5 border-t border-stone-200/50 dark:border-stone-700/50 px-3 py-3">
                         {group.rows.map((row) => (
-                          <AiMatchRow
-                            key={`${row.eventSlug}-${row.matchKey}`}
-                            row={row}
-                          />
+                          <AiMatchRow key={`${row.eventSlug}-${row.matchKey}`} row={row} />
                         ))}
                       </ul>
                     )}

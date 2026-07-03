@@ -2,15 +2,25 @@
 
 import { useCallback, useRef, useState } from "react";
 import { Upload } from "lucide-react";
+import { parseApiError, visionApiBaseUrl } from "@/lib/api";
 
-type UploadState = { kind: "empty" } | { kind: "ready"; fileName: string; text: string };
+type UploadState = { kind: "empty" } | { kind: "ready"; fileName: string; previewUrl: string };
 
-export function ContactsCsvUpload() {
+type UploadResult = {
+  filename: string;
+  contentType: string;
+  sizeBytes: number;
+  savedPath: string;
+};
+
+const ACCEPTED_TYPES = new Set(["image/jpeg", "image/png"]);
+
+export function TitanicVisionUpload() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragOver, setDragOver] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
-  const [uploadedCount, setUploadedCount] = useState<number | null>(null);
+  const [result, setResult] = useState<UploadResult | null>(null);
   const [state, setState] = useState<UploadState>({ kind: "empty" });
 
   const uploadFile = useCallback(async (file: File) => {
@@ -20,25 +30,21 @@ export function ContactsCsvUpload() {
       const form = new FormData();
       form.append("file", file);
 
-      const res = await fetch("/api/contacts/upload", {
+      const res = await fetch(`${visionApiBaseUrl}/upload`, {
         method: "POST",
         body: form,
       });
       const data = await res.json().catch(() => null);
       if (!res.ok) {
-        const detail =
-          (data &&
-            typeof data === "object" &&
-            "detail" in data &&
-            (data as Record<string, unknown>).detail) ||
-          "업로드에 실패했습니다.";
-        throw new Error(String(detail));
+        throw new Error(parseApiError(data, res.status));
       }
-      const count =
-        data && typeof data === "object" && "count" in data
-          ? Number((data as Record<string, unknown>).count)
-          : null;
-      setUploadedCount(Number.isFinite(count) ? count : null);
+      const body = data as Record<string, unknown>;
+      setResult({
+        filename: String(body.filename ?? file.name),
+        contentType: String(body.content_type ?? file.type),
+        sizeBytes: Number(body.size_bytes ?? file.size),
+        savedPath: String(body.saved_path ?? ""),
+      });
     } catch (e) {
       setError(e instanceof Error ? e.message : "업로드 중 오류가 발생했습니다.");
     } finally {
@@ -49,23 +55,16 @@ export function ContactsCsvUpload() {
   const ingestFile = useCallback(
     (file: File | undefined) => {
       setError(null);
-      setUploadedCount(null);
+      setResult(null);
       if (!file) return;
 
-      if (!file.name.toLowerCase().endsWith(".csv")) {
-        setError("CSV 파일(.csv)만 업로드할 수 있습니다.");
+      if (!ACCEPTED_TYPES.has(file.type)) {
+        setError("jpg 또는 png 이미지 파일만 업로드할 수 있습니다.");
         return;
       }
 
-      const reader = new FileReader();
-      reader.onload = () => {
-        const text = typeof reader.result === "string" ? reader.result : "";
-        setState({ kind: "ready", fileName: file.name, text });
-      };
-      reader.onerror = () => {
-        setError("파일을 읽는 중 오류가 발생했습니다.");
-      };
-      reader.readAsText(file, "UTF-8");
+      const previewUrl = URL.createObjectURL(file);
+      setState({ kind: "ready", fileName: file.name, previewUrl });
 
       void uploadFile(file);
     },
@@ -102,23 +101,12 @@ export function ContactsCsvUpload() {
     ingestFile(file);
   };
 
-  const summary =
-    state.kind === "ready"
-      ? (() => {
-          const text = state.text;
-          const lines = text.trim().length ? text.split(/\r?\n/).length : 0;
-          const bytes = new TextEncoder().encode(text).length;
-          const preview = text.slice(0, 900);
-          return { lines, bytes, preview };
-        })()
-      : null;
-
   return (
     <>
       <input
         ref={inputRef}
         type="file"
-        accept=".csv,text/csv"
+        accept="image/jpeg,image/png"
         className="sr-only"
         aria-hidden
         tabIndex={-1}
@@ -126,9 +114,9 @@ export function ContactsCsvUpload() {
       />
 
       <div className="space-y-8">
-        <section aria-labelledby="contacts-upload-panel-title">
+        <section aria-labelledby="upload-panel-title">
           <h2
-            id="contacts-upload-panel-title"
+            id="upload-panel-title"
             className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-500"
           >
             방식 1 · 업로드 창
@@ -140,7 +128,7 @@ export function ContactsCsvUpload() {
             onDragLeave={onDragLeave}
             onDrop={onDrop}
             disabled={uploading}
-            aria-label="CSV 파일을 여기에 놓거나 클릭하여 선택"
+            aria-label="이미지 파일을 여기에 놓거나 클릭하여 선택"
             className={[
               "flex w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-14 text-center transition-colors",
               uploading
@@ -152,12 +140,12 @@ export function ContactsCsvUpload() {
           >
             <Upload className="mb-3 size-10 text-zinc-400" strokeWidth={1.25} aria-hidden />
             <p className="text-base font-medium text-zinc-800 dark:text-zinc-200">
-              {uploading ? "서버로 전송 중..." : "파일을 이 영역에 끌어다 놓기"}
+              {uploading ? "서버로 전송 중..." : "이미지를 이 영역에 끌어다 놓기"}
             </p>
             <p className="mt-1 text-sm text-zinc-500">
               {uploading
                 ? "잠시만 기다려 주세요."
-                : "또는 클릭해서 탐색기에서 선택 (선택 즉시 전송)"}
+                : "jpg, png 만 지원 · 또는 클릭해서 탐색기에서 선택 (선택 즉시 전송)"}
             </p>
           </button>
         </section>
@@ -171,9 +159,9 @@ export function ContactsCsvUpload() {
           </div>
         </div>
 
-        <section aria-labelledby="contacts-upload-button-title">
+        <section aria-labelledby="upload-button-title">
           <h2
-            id="contacts-upload-button-title"
+            id="upload-button-title"
             className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-500"
           >
             방식 2 · 업로드 버튼
@@ -191,7 +179,7 @@ export function ContactsCsvUpload() {
               ].join(" ")}
             >
               <Upload className="size-4" aria-hidden />
-              {uploading ? "업로드 중..." : "CSV 업로드"}
+              {uploading ? "업로드 중..." : "이미지 업로드"}
             </button>
             <p className="max-w-xs text-center text-sm text-zinc-500 sm:text-left">
               파일을 고르면 자동으로 서버에 전송됩니다.
@@ -199,12 +187,6 @@ export function ContactsCsvUpload() {
           </div>
         </section>
       </div>
-
-      {uploadedCount !== null && (
-        <p className="mt-6 text-sm font-medium text-zinc-700">
-          서버 수신 완료: {uploadedCount.toLocaleString("ko-KR")}건
-        </p>
-      )}
 
       {error && (
         <p
@@ -215,19 +197,23 @@ export function ContactsCsvUpload() {
         </p>
       )}
 
-      {state.kind === "ready" && summary && (
+      {state.kind === "ready" && (
         <div className="mt-8 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50/80 dark:bg-zinc-900/80 p-4">
           <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200">
-            불러온 파일: {state.fileName}
+            선택한 파일: {state.fileName}
           </p>
-          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-            {summary.lines.toLocaleString("ko-KR")}줄 · {summary.bytes.toLocaleString("ko-KR")}
-            바이트
-          </p>
-          <pre className="mt-3 max-h-64 overflow-auto whitespace-pre-wrap break-all rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 p-3 text-xs text-zinc-700 dark:text-zinc-300">
-            {summary.preview}
-            {state.text.length > summary.preview.length ? "\n…" : ""}
-          </pre>
+          {/* eslint-disable-next-line @next/next/no-img-element -- 로컬 blob URL 미리보기 */}
+          <img
+            src={state.previewUrl}
+            alt={state.fileName}
+            className="mt-3 max-h-80 rounded-lg border border-zinc-200 dark:border-zinc-700 object-contain"
+          />
+          {result && (
+            <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
+              서버 저장 완료 · {result.contentType} · {result.sizeBytes.toLocaleString("ko-KR")}
+              바이트
+            </p>
+          )}
         </div>
       )}
     </>

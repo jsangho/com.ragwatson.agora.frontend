@@ -17,35 +17,15 @@ export function KayfabeMark({ className }: { className?: string }) {
       aria-hidden
     >
       <rect width="32" height="32" rx="9" fill="#050505" />
-      <rect
-        width="32"
-        height="32"
-        rx="9"
-        stroke="#52525b"
-        strokeWidth="0.5"
-        fill="none"
-      />
+      <rect width="32" height="32" rx="9" stroke="#52525b" strokeWidth="0.5" fill="none" />
 
       <rect width="32" height="32" rx="9" fill={`url(#kf-arena-${uid})`} />
 
-      <path
-        d="M0 32V24.5L16 19.8L32 24.5V32H0Z"
-        fill={`url(#kf-mat-${uid})`}
-      />
-      <path
-        d="M2 32V25.8L16 21.6L30 25.8V32H2Z"
-        fill="#1c1917"
-        opacity="0.55"
-      />
+      <path d="M0 32V24.5L16 19.8L32 24.5V32H0Z" fill={`url(#kf-mat-${uid})`} />
+      <path d="M2 32V25.8L16 21.6L30 25.8V32H2Z" fill="#1c1917" opacity="0.55" />
 
-      <path
-        d="M1.5 8.2V21.5L4.2 20.8V9.4L1.5 8.2Z"
-        fill="#3f3f46"
-      />
-      <path
-        d="M30.5 8.2V21.5L27.8 20.8V9.4L30.5 8.2Z"
-        fill="#3f3f46"
-      />
+      <path d="M1.5 8.2V21.5L4.2 20.8V9.4L1.5 8.2Z" fill="#3f3f46" />
+      <path d="M30.5 8.2V21.5L27.8 20.8V9.4L30.5 8.2Z" fill="#3f3f46" />
       <rect x="3.8" y="7.6" width="2.2" height="13.8" rx="0.4" fill="#52525b" />
       <rect x="26" y="7.6" width="2.2" height="13.8" rx="0.4" fill="#52525b" />
       <rect x="3.4" y="7.2" width="3" height="2.2" rx="0.35" fill="#a16207" />
@@ -212,7 +192,7 @@ export function KayfabeLogo({
 
   const rootClass = cn(
     "inline-flex items-center gap-2.5 transition-opacity hover:opacity-90",
-    className
+    className,
   );
 
   if (href) {

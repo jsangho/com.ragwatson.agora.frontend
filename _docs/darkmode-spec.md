@@ -16,7 +16,7 @@ npm install next-themes
 
 ```tsx
 // app/layout.tsx
-import { ThemeProvider } from 'next-themes'
+import { ThemeProvider } from "next-themes";
 
 export default function RootLayout({ children }) {
   return (
@@ -24,15 +24,15 @@ export default function RootLayout({ children }) {
       <body>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"       // 기본값 화이트
-          enableSystem={true}        // OS 다크모드 감지
-          disableTransitionOnChange  // 전환 시 깜빡임 방지
+          defaultTheme="light" // 기본값 화이트
+          enableSystem={true} // OS 다크모드 감지
+          disableTransitionOnChange // 전환 시 깜빡임 방지
         >
           {children}
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }
 ```
 
@@ -43,9 +43,9 @@ export default function RootLayout({ children }) {
 ```js
 // tailwind.config.js
 module.exports = {
-  darkMode: 'class',  // 'media' 아닌 'class' — 토글 제어 가능하게
+  darkMode: "class", // 'media' 아닌 'class' — 토글 제어 가능하게
   // ...
-}
+};
 ```
 
 ---
@@ -56,30 +56,26 @@ module.exports = {
 
 ```tsx
 // components/ThemeToggle.tsx
-'use client'
-import { useTheme } from 'next-themes'
-import { useEffect, useState } from 'react'
+"use client";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), [])
-  if (!mounted) return null  // hydration 불일치 방지
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null; // hydration 불일치 방지
 
   return (
     <button
-      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       aria-label="테마 전환"
       className="p-2 rounded-md text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
     >
-      {theme === 'dark' ? (
-        <SunIcon className="w-4 h-4" />
-      ) : (
-        <MoonIcon className="w-4 h-4" />
-      )}
+      {theme === "dark" ? <SunIcon className="w-4 h-4" /> : <MoonIcon className="w-4 h-4" />}
     </button>
-  )
+  );
 }
 ```
 
@@ -92,35 +88,35 @@ Tailwind `dark:` 클래스와 병행해서 CSS 변수로 시맨틱 토큰 관리
 ```css
 /* app/globals.css */
 :root {
-  --bg-primary:    #ffffff;
-  --bg-secondary:  #f9fafb;
-  --bg-surface:    #f3f4f6;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-surface: #f3f4f6;
 
-  --text-primary:  #111827;
-  --text-secondary:#6b7280;
-  --text-muted:    #9ca3af;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
 
-  --border:        #e5e7eb;
+  --border: #e5e7eb;
   --border-strong: #d1d5db;
 
-  --accent:        #2563eb;   /* RAGWATSON 브랜드 블루 */
-  --accent-hover:  #1d4ed8;
+  --accent: #2563eb; /* RAGWATSON 브랜드 블루 */
+  --accent-hover: #1d4ed8;
 }
 
 [class~="dark"] {
-  --bg-primary:    #0a0a0a;
-  --bg-secondary:  #111111;
-  --bg-surface:    #1a1a1a;
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #111111;
+  --bg-surface: #1a1a1a;
 
-  --text-primary:  #ededed;
-  --text-secondary:#a1a1aa;
-  --text-muted:    #71717a;
+  --text-primary: #ededed;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
 
-  --border:        #27272a;
+  --border: #27272a;
   --border-strong: #3f3f46;
 
-  --accent:        #3b82f6;
-  --accent-hover:  #60a5fa;
+  --accent: #3b82f6;
+  --accent-hover: #60a5fa;
 }
 ```
 
@@ -158,13 +154,15 @@ Tailwind `dark:` 클래스와 병행해서 CSS 변수로 시맨틱 토큰 관리
 
 ```tsx
 // components/RightPanel.tsx
-<aside className="
+<aside
+  className="
   w-[200px] shrink-0
   border-l border-gray-100 dark:border-gray-800
   bg-gray-50 dark:bg-[#111111]
   px-4 py-6
   hidden lg:block
-">
+"
+>
   {/* TOC or FilterPanel or RelatedPanel */}
 </aside>
 ```
@@ -175,21 +173,19 @@ Tailwind `dark:` 클래스와 병행해서 CSS 변수로 시맨틱 토큰 관리
 
 ```tsx
 // components/LeftSidebar.tsx
-<nav className="
+<nav
+  className="
   w-[160px] shrink-0
   border-r border-gray-100 dark:border-gray-800
   bg-gray-50 dark:bg-[#111111]
   px-3 py-4
   hidden md:block
-">
+"
+>
   {/* active 항목 */}
-  <span className="text-blue-600 dark:text-blue-400 font-medium">
-    데이터 수집
-  </span>
+  <span className="text-blue-600 dark:text-blue-400 font-medium">데이터 수집</span>
   {/* 일반 항목 */}
-  <span className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
-    탐승자 목록
-  </span>
+  <span className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">탐승자 목록</span>
 </nav>
 ```
 
@@ -199,17 +195,19 @@ Tailwind `dark:` 클래스와 병행해서 CSS 변수로 시맨틱 토큰 관리
 
 ```tsx
 // components/Topbar.tsx
-<header className="
+<header
+  className="
   border-b border-gray-100 dark:border-gray-800
   bg-white dark:bg-[#0a0a0a]
   sticky top-0 z-50
-">
+"
+>
   <div className="flex items-center px-6 h-12">
     <Logo />
     <NavLinks />
     <div className="ml-auto flex items-center gap-4">
-      <ThemeToggle />   {/* 해/달 아이콘 */}
-      <AuthButton />    {/* 로그인 */}
+      <ThemeToggle /> {/* 해/달 아이콘 */}
+      <AuthButton /> {/* 로그인 */}
     </div>
   </div>
 </header>

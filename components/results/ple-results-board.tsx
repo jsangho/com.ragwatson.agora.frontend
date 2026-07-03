@@ -12,11 +12,7 @@ import {
 } from "@/lib/ple-api";
 import type { PleSlug } from "@/lib/wwe-ple";
 import { PleResultsAdminGate } from "@/components/results/ple-results-admin-gate";
-import {
-  getPleMatches,
-  isMultiMatch,
-  type PleMatchCard,
-} from "@/lib/wwe-ple-matches";
+import { getPleMatches, isMultiMatch, type PleMatchCard } from "@/lib/wwe-ple-matches";
 
 type PleResultsBoardProps = {
   slug: PleSlug;
@@ -34,7 +30,7 @@ type ResultsUiState = {
 
 function draftFromMatch(
   match: PleBoardMatch,
-  pick: DraftPick | null
+  pick: DraftPick | null,
 ): {
   winnerSide?: "left" | "right";
   winnerIndex?: number;
@@ -47,15 +43,11 @@ function draftFromMatch(
   return { winnerIndex: pick.index, winnerName: pick.name };
 }
 
-function pickFromExisting(
-  matchRow: PleBoardMatch,
-  matchCard: PleMatchCard
-): DraftPick | null {
+function pickFromExisting(matchRow: PleBoardMatch, matchCard: PleMatchCard): DraftPick | null {
   const r = matchRow.result;
   if (!r) return null;
   if (matchCard.format === "multi" && r.winnerIndex != null) {
-    const name =
-      matchCard.competitors[r.winnerIndex]?.name ?? r.winnerName ?? "";
+    const name = matchCard.competitors[r.winnerIndex]?.name ?? r.winnerName ?? "";
     return { kind: "multi", index: r.winnerIndex, name };
   }
   if (r.winnerSide === "left" || r.winnerSide === "right") {
@@ -76,10 +68,7 @@ function pickFromExisting(
   return null;
 }
 
-function winnerLabel(
-  matchRow: PleBoardMatch,
-  matchCard: PleMatchCard
-): string | null {
+function winnerLabel(matchRow: PleBoardMatch, matchCard: PleMatchCard): string | null {
   const r = matchRow.result;
   if (!r) return null;
   if (r.winnerName) return r.winnerName;
@@ -95,7 +84,7 @@ function winnerLabel(
 /** API 카드에 isChampion이 빠진 경우 정적 시드에서 보강 */
 function mergeChampionFromStatic(
   card: PleMatchCard,
-  staticCard: PleMatchCard | undefined
+  staticCard: PleMatchCard | undefined,
 ): PleMatchCard {
   if (!staticCard) return card;
   if (isMultiMatch(card) && isMultiMatch(staticCard)) {
@@ -125,7 +114,7 @@ function mergeChampionFromStatic(
 
 function buildInitialDrafts(
   matches: PleBoardMatch[],
-  cardsById: Record<string, PleMatchCard>
+  cardsById: Record<string, PleMatchCard>,
 ): Record<string, DraftPick | null> {
   const drafts: Record<string, DraftPick | null> = {};
   for (const m of matches) {
@@ -157,7 +146,7 @@ function MatchResultRow({
         "rounded-xl border p-4",
         hasResult
           ? "border-emerald-500/50 bg-emerald-50/60 dark:bg-emerald-950/25"
-          : "border-stone-300/70 dark:border-stone-600/70 bg-stone-100/50 dark:bg-stone-800/50"
+          : "border-stone-300/70 dark:border-stone-600/70 bg-stone-100/50 dark:bg-stone-800/50",
       )}
     >
       <div className="flex flex-wrap items-start justify-between gap-2">
@@ -181,59 +170,54 @@ function MatchResultRow({
 
       {canEdit && (
         <div className="mt-3 flex flex-wrap gap-2">
-          {!isMultiMatch(matchCard) ? (
-            (["left", "right"] as const).map((side) => {
-              const competitor =
-                side === "left" ? matchCard.left : matchCard.right;
-              const selected = pick?.kind === "singles" && pick.side === side;
-              return (
-                <button
-                  key={side}
-                  type="button"
-                  onClick={() =>
-                    onPick({
-                      kind: "singles",
-                      side,
-                      name: competitor.name,
-                    })
-                  }
-                  className={cn(
-                    "rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors",
-                    selected
-                      ? "border-amber-500/80 bg-amber-100 dark:bg-amber-950/50 text-amber-800 dark:text-amber-100"
-                      : "border-stone-300 dark:border-stone-600 bg-stone-100/60 dark:bg-stone-900/60 text-stone-700 dark:text-stone-300 hover:border-stone-400 dark:hover:border-stone-500 hover:bg-stone-200 dark:hover:bg-stone-800"
-                  )}
-                >
-                  {competitor.name}
-                  {competitor.isChampion && (
-                    <span className="ml-1 text-xs text-amber-400">(C)</span>
-                  )}
-                </button>
-              );
-            })
-          ) : (
-            matchCard.competitors.map((c, idx) => {
-              const selected = pick?.kind === "multi" && pick.index === idx;
-              return (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => onPick({ kind: "multi", index: idx, name: c.name })}
-                  className={cn(
-                    "rounded-lg border px-3 py-2 text-sm font-medium transition-colors",
-                    selected
-                      ? "border-amber-500/80 bg-amber-100 dark:bg-amber-950/50 text-amber-800 dark:text-amber-100"
-                      : "border-stone-300 dark:border-stone-600 bg-stone-100/60 dark:bg-stone-900/60 text-stone-700 dark:text-stone-300 hover:border-stone-400 dark:hover:border-stone-500 hover:bg-stone-200 dark:hover:bg-stone-800"
-                  )}
-                >
-                  {c.name}
-                  {c.isChampion && (
-                    <span className="ml-1 text-xs text-amber-400">(C)</span>
-                  )}
-                </button>
-              );
-            })
-          )}
+          {!isMultiMatch(matchCard)
+            ? (["left", "right"] as const).map((side) => {
+                const competitor = side === "left" ? matchCard.left : matchCard.right;
+                const selected = pick?.kind === "singles" && pick.side === side;
+                return (
+                  <button
+                    key={side}
+                    type="button"
+                    onClick={() =>
+                      onPick({
+                        kind: "singles",
+                        side,
+                        name: competitor.name,
+                      })
+                    }
+                    className={cn(
+                      "rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors",
+                      selected
+                        ? "border-amber-500/80 bg-amber-100 dark:bg-amber-950/50 text-amber-800 dark:text-amber-100"
+                        : "border-stone-300 dark:border-stone-600 bg-stone-100/60 dark:bg-stone-900/60 text-stone-700 dark:text-stone-300 hover:border-stone-400 dark:hover:border-stone-500 hover:bg-stone-200 dark:hover:bg-stone-800",
+                    )}
+                  >
+                    {competitor.name}
+                    {competitor.isChampion && (
+                      <span className="ml-1 text-xs text-amber-400">(C)</span>
+                    )}
+                  </button>
+                );
+              })
+            : matchCard.competitors.map((c, idx) => {
+                const selected = pick?.kind === "multi" && pick.index === idx;
+                return (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => onPick({ kind: "multi", index: idx, name: c.name })}
+                    className={cn(
+                      "rounded-lg border px-3 py-2 text-sm font-medium transition-colors",
+                      selected
+                        ? "border-amber-500/80 bg-amber-100 dark:bg-amber-950/50 text-amber-800 dark:text-amber-100"
+                        : "border-stone-300 dark:border-stone-600 bg-stone-100/60 dark:bg-stone-900/60 text-stone-700 dark:text-stone-300 hover:border-stone-400 dark:hover:border-stone-500 hover:bg-stone-200 dark:hover:bg-stone-800",
+                    )}
+                  >
+                    {c.name}
+                    {c.isChampion && <span className="ml-1 text-xs text-amber-400">(C)</span>}
+                  </button>
+                );
+              })}
         </div>
       )}
 
@@ -258,8 +242,7 @@ export function PleResultsBoard({ slug }: PleResultsBoardProps) {
     submitError: null,
   });
 
-  const patchUi = (patch: Partial<ResultsUiState>) =>
-    setUi((prev) => ({ ...prev, ...patch }));
+  const patchUi = (patch: Partial<ResultsUiState>) => setUi((prev) => ({ ...prev, ...patch }));
 
   const load = useCallback(async () => {
     const cards = getPleMatches(slug);
@@ -337,15 +320,11 @@ export function PleResultsBoard({ slug }: PleResultsBoardProps) {
 
   const draftCount = useMemo(
     () => matches.filter((m) => ui.drafts[m.id] != null).length,
-    [matches, ui.drafts]
+    [matches, ui.drafts],
   );
 
   const canSubmit =
-    canEdit &&
-    board != null &&
-    !syncError &&
-    draftCount === matches.length &&
-    matches.length > 0;
+    canEdit && board != null && !syncError && draftCount === matches.length && matches.length > 0;
 
   const handleSubmitAll = async () => {
     if (!canSubmit || ui.submitting) return;
@@ -395,15 +374,13 @@ export function PleResultsBoard({ slug }: PleResultsBoardProps) {
           서버 연결 없음 — 결과를 등록하려면 백엔드가 실행 중이어야 합니다. ({syncError})
         </p>
       )}
-      {loading && (
-        <p className="text-center text-sm text-stone-500">경기 목록 불러오는 중…</p>
-      )}
+      {loading && <p className="text-center text-sm text-stone-500">경기 목록 불러오는 중…</p>}
       {!loading && (
         <>
           {canEdit && (
             <p className="text-sm text-stone-400">
-              모든 경기의 승자를 고른 뒤 맨 아래 「결과 일괄 등록」을 눌러 주세요. 확정
-              전까지 언제든지 변경할 수 있습니다.
+              모든 경기의 승자를 고른 뒤 맨 아래 「결과 일괄 등록」을 눌러 주세요. 확정 전까지
+              언제든지 변경할 수 있습니다.
             </p>
           )}
           <ul className="space-y-4">
@@ -442,7 +419,7 @@ export function PleResultsBoard({ slug }: PleResultsBoardProps) {
                     "rounded-lg px-6 py-2.5 text-sm font-bold transition-colors",
                     canSubmit && !ui.submitting
                       ? "bg-amber-600 text-stone-950 hover:bg-amber-500"
-                      : "cursor-not-allowed bg-stone-200 dark:bg-stone-700 text-stone-500"
+                      : "cursor-not-allowed bg-stone-200 dark:bg-stone-700 text-stone-500",
                   )}
                 >
                   {ui.submitting ? "등록 중…" : "결과 일괄 등록"}

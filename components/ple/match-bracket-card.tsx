@@ -40,8 +40,12 @@ function AiPickBanner({
     <p
       className={cn(
         "border-t border-stone-200/50 dark:border-white/8 bg-stone-50/50 dark:bg-white/[0.03] px-3 py-1.5 text-center text-[10px] text-stone-400 sm:text-xs",
-        showResults && aiCorrect === true && "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300",
-        showResults && aiCorrect === false && "bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300"
+        showResults &&
+          aiCorrect === true &&
+          "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300",
+        showResults &&
+          aiCorrect === false &&
+          "bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300",
       )}
     >
       <span className="font-semibold text-amber-400/90">AI 예측</span>
@@ -71,7 +75,7 @@ function VsDivider() {
 function pickOutcome(
   result: PleMatchResult | PleMatchResultHint | null | undefined,
   format: "singles" | "multi",
-  index: Side | number
+  index: Side | number,
 ): "win" | "loss" | null {
   if (!result) return null;
   if (format === "singles" && (index === "left" || index === "right")) {
@@ -134,7 +138,7 @@ function CompetitorPick({
         outcome != null && isSelected && "ring-2 ring-inset ring-amber-400/50",
         outcome == null && !isSelected && isOtherSelected && "bg-white/[0.02]",
         outcome == null && !isSelected && locked && "bg-white/[0.02]",
-        (locked || resultsLocked) && "cursor-default"
+        (locked || resultsLocked) && "cursor-default",
       )}
     >
       <div className="flex items-center gap-1.5">
@@ -144,7 +148,7 @@ function CompetitorPick({
             "text-center font-semibold text-stone-800 dark:text-stone-100",
             compact ? "text-xs sm:text-sm" : "text-sm sm:text-base",
             outcome === "win" && "text-emerald-300",
-            outcome === "loss" && "text-stone-500"
+            outcome === "loss" && "text-stone-500",
           )}
         >
           {competitor.name}
@@ -154,7 +158,7 @@ function CompetitorPick({
         <span
           className={cn(
             "mt-0.5 rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white",
-            outcome == null ? "bg-amber-600" : "bg-amber-700"
+            outcome == null ? "bg-amber-600" : "bg-amber-700",
           )}
         >
           {BRACKET_LABELS.myPick}
@@ -249,7 +253,10 @@ function SiteVoteMulti({
                 <span className="shrink-0 tabular-nums font-semibold text-stone-300">{pct}%</span>
               </div>
               <div className="h-1.5 overflow-hidden rounded-full bg-stone-200/60 dark:bg-white/10">
-                <div className={cn("h-full transition-all", barClass)} style={{ width: `${pct}%` }} />
+                <div
+                  className={cn("h-full transition-all", barClass)}
+                  style={{ width: `${pct}%` }}
+                />
               </div>
             </li>
           );
@@ -282,7 +289,9 @@ function DualStatBar({
         </span>
         <span className="tabular-nums text-stone-400">
           <span className="font-semibold">{leftPercent}%</span>
-          <span className="mx-1 text-stone-500 dark:text-stone-300">{BRACKET_LABELS.percentSep}</span>
+          <span className="mx-1 text-stone-500 dark:text-stone-300">
+            {BRACKET_LABELS.percentSep}
+          </span>
           <span className="font-semibold">{rightPercent}%</span>
         </span>
       </div>
@@ -379,9 +388,7 @@ export function MatchBracketCard({
                     locked={locked}
                     onSelect={() => onSelect(index)}
                     compact
-                    outcome={
-                      displayResults ? pickOutcome(result, "multi", index) : null
-                    }
+                    outcome={displayResults ? pickOutcome(result, "multi", index) : null}
                   />
                 );
               })}
@@ -389,16 +396,9 @@ export function MatchBracketCard({
           </div>
 
           <div className="space-y-2.5 border-t border-stone-200/50 dark:border-white/8 bg-stone-50/50 dark:bg-white/[0.03] px-3 py-2.5 sm:px-4">
-            <SiteVoteMulti
-              competitors={match.competitors}
-              votes={multiVotes}
-              barClass={barClass}
-            />
+            <SiteVoteMulti competitors={match.competitors} votes={multiVotes} barClass={barClass} />
             {match.bookmakerDecimal && (
-              <BookmakerMulti
-                competitors={match.competitors}
-                decimals={match.bookmakerDecimal}
-              />
+              <BookmakerMulti competitors={match.competitors} decimals={match.bookmakerDecimal} />
             )}
             <p className="text-center text-[9px] text-stone-600">{BRACKET_LABELS.bookNote}</p>
           </div>
@@ -408,10 +408,7 @@ export function MatchBracketCard({
   }
 
   const singlesVotes = votes as SinglesVotes;
-  const book = normalizedTwoWayMarket(
-    match.bookmakerDecimal.left,
-    match.bookmakerDecimal.right
-  );
+  const book = normalizedTwoWayMarket(match.bookmakerDecimal.left, match.bookmakerDecimal.right);
 
   return (
     <article className="ple-match-card overflow-hidden rounded-xl">
@@ -419,11 +416,7 @@ export function MatchBracketCard({
         <div className="ple-match-card-header px-3 py-2.5 text-center text-xs font-semibold leading-snug text-white sm:text-sm">
           {match.title}
         </div>
-        <AiPickBanner
-          aiPickName={aiPickName}
-          aiCorrect={aiCorrect}
-          showResults={displayResults}
-        />
+        <AiPickBanner aiPickName={aiPickName} aiCorrect={aiCorrect} showResults={displayResults} />
 
         <div className="relative flex border-t border-stone-200/50 dark:border-white/8 bg-stone-50/50 dark:bg-black/20">
           <CompetitorPick

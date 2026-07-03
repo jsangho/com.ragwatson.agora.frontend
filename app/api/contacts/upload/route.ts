@@ -11,10 +11,10 @@ export async function POST(req: NextRequest) {
   const upstream = new FormData();
   upstream.append("file", file);
 
-  const res = await fetch(
-    `${process.env.INTERNAL_API_BASE_URL}/api/manager/juso/fileupload`,
-    { method: "POST", body: upstream },
-  );
+  const res = await fetch(`${process.env.INTERNAL_API_BASE_URL}/api/manager/juso/fileupload`, {
+    method: "POST",
+    body: upstream,
+  });
   const data = await res.json().catch(() => null);
   return NextResponse.json(data, { status: res.status });
 }

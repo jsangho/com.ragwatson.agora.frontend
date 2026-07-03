@@ -23,11 +23,7 @@ const WRESTLER_REGISTRY: Record<string, WrestlerEntry> = {
   },
   "The Wyatt Sicks": {
     kind: "stable",
-    members: [
-      { ringName: "Bo Dallas" },
-      { ringName: "Dexter Lumis" },
-      { ringName: "Joe Gacy" },
-    ],
+    members: [{ ringName: "Bo Dallas" }, { ringName: "Dexter Lumis" }, { ringName: "Joe Gacy" }],
   },
   "Motor City Machine Guns": {
     kind: "tag",
@@ -152,10 +148,17 @@ function lookupEntry(ringName: string): WrestlerEntry | undefined {
 
 function splitCompoundName(ringName: string): string[] | null {
   if (!ringName.includes(" & ")) return null;
-  return ringName.split(" & ").map((p) => p.trim()).filter(Boolean);
+  return ringName
+    .split(" & ")
+    .map((p) => p.trim())
+    .filter(Boolean);
 }
 
-function buildFromMembers(ringName: string, members: WrestlerMember[], kind: CompetitorInfo["kind"]): CompetitorInfo {
+function buildFromMembers(
+  ringName: string,
+  members: WrestlerMember[],
+  kind: CompetitorInfo["kind"],
+): CompetitorInfo {
   return { ringName, kind, kindLabel: KIND_LABEL[kind], members };
 }
 

@@ -5,11 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/auth-context";
-import {
-  fetchRankings,
-  formatAccuracy,
-  type RankingRow,
-} from "@/lib/rankings-api";
+import { fetchRankings, formatAccuracy, type RankingRow } from "@/lib/rankings-api";
 
 type MyInfoPageState = {
   statsLoading: boolean;
@@ -71,9 +67,7 @@ export default function MyInfoPage() {
 
   if (!isReady || !user) {
     return (
-      <main className="mx-auto max-w-lg px-4 py-16 text-center text-stone-400">
-        불러오는 중...
-      </main>
+      <main className="mx-auto max-w-lg px-4 py-16 text-center text-stone-400">불러오는 중...</main>
     );
   }
 
@@ -82,9 +76,7 @@ export default function MyInfoPage() {
   return (
     <main className="mx-auto max-w-lg px-4 py-10">
       <div className="rounded-3xl border border-stone-300/70 dark:border-stone-700/70 bg-stone-50/80 dark:bg-stone-950/58 p-6 shadow-2xl shadow-black/35 backdrop-blur-xl sm:p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.28em] text-stone-500">
-          KayFabe
-        </p>
+        <p className="text-xs font-semibold uppercase tracking-[0.28em] text-stone-500">KayFabe</p>
         <h1 className="mt-3 text-2xl font-bold tracking-tight text-stone-900 dark:text-stone-50">
           내 정보
         </h1>
@@ -109,26 +101,13 @@ export default function MyInfoPage() {
             </p>
           ) : stats ? (
             <dl className="mt-4 space-y-3">
-              <InfoRow
-                label="순위"
-                value={`${stats.rank}위`}
-                highlight
-              />
-              <InfoRow
-                label="점수"
-                value={String(stats.score)}
-                highlight
-              />
-              <InfoRow
-                label="예측 성공률"
-                value={formatAccuracy(stats.accuracy)}
-                highlight
-              />
+              <InfoRow label="순위" value={`${stats.rank}위`} highlight />
+              <InfoRow label="점수" value={String(stats.score)} highlight />
+              <InfoRow label="예측 성공률" value={formatAccuracy(stats.accuracy)} highlight />
             </dl>
           ) : (
             <p className="mt-4 rounded-2xl border border-dashed border-stone-300/60 dark:border-stone-600/60 bg-stone-100/40 dark:bg-stone-900/40 px-4 py-3 text-sm text-stone-500 dark:text-stone-400">
-              아직 채점된 예측이 없습니다. PLE 페이지에서 예측하고 결과가
-              나오면 점수가 쌓입니다.
+              아직 채점된 예측이 없습니다. PLE 페이지에서 예측하고 결과가 나오면 점수가 쌓입니다.
             </p>
           )}
         </section>

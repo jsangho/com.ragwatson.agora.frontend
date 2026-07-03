@@ -5,12 +5,7 @@ import { useRouter } from "next/navigation";
 import { IdCard, LockKeyhole, Mail, UserRound } from "lucide-react";
 import { useAuth, type AuthUser } from "@/context/auth-context";
 import { parseUserProfile } from "@/lib/auth-api";
-import {
-  apiBaseUrl,
-  getRequestTimeoutMessage,
-  isAbortError,
-  requestTimeoutMs,
-} from "@/lib/api";
+import { apiBaseUrl, getRequestTimeoutMessage, isAbortError, requestTimeoutMs } from "@/lib/api";
 import { LoginBackdrop } from "./login-backdrop";
 
 type AuthMode = "login" | "signup";
@@ -282,20 +277,14 @@ export function LoginForm() {
               disabled={state.isSubmitting}
               className="mt-2 h-12 w-full rounded-2xl border border-stone-500/40 bg-stone-200 text-sm font-bold text-stone-950 shadow-lg shadow-black/20 transition-colors hover:bg-stone-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-950"
             >
-              {state.isSubmitting
-                ? "전송 중..."
-                : isSignup
-                  ? "회원가입"
-                  : "로그인"}
+              {state.isSubmitting ? "전송 중..." : isSignup ? "회원가입" : "로그인"}
             </button>
           </form>
 
           <div className="mt-5 text-center">
             <button
               type="button"
-              onClick={() =>
-                patchState({ mode: isSignup ? "login" : "signup" })
-              }
+              onClick={() => patchState({ mode: isSignup ? "login" : "signup" })}
               className="rounded-full border border-stone-300/80 dark:border-stone-700/80 bg-stone-100/55 dark:bg-stone-900/55 px-3 py-1.5 text-xs font-medium text-stone-600 dark:text-stone-400 transition-colors hover:border-stone-500 hover:bg-stone-200/80 dark:hover:bg-stone-800/80 hover:text-stone-900 dark:hover:text-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500/60"
             >
               {isSignup ? "로그인으로 돌아가기" : "회원가입"}

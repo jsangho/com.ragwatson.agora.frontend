@@ -26,11 +26,14 @@ export default function RecordsPage() {
 
   useEffect(() => {
     let cancelled = false;
-    const timer = setTimeout(async () => {
-      patchState({ loading: true });
-      const names = await fetchCompetitorNames(state.query);
-      if (!cancelled) patchState({ names, loading: false });
-    }, state.query ? 250 : 0);
+    const timer = setTimeout(
+      async () => {
+        patchState({ loading: true });
+        const names = await fetchCompetitorNames(state.query);
+        if (!cancelled) patchState({ names, loading: false });
+      },
+      state.query ? 250 : 0,
+    );
 
     return () => {
       cancelled = true;
@@ -58,8 +61,8 @@ export default function RecordsPage() {
           </h1>
           <p className="relative z-10 mx-auto mt-3 max-w-lg text-sm font-medium leading-relaxed text-stone-400 sm:text-base">
             PLE 출전 선수 목록에서 선택하면{" "}
-            <span className="font-semibold text-stone-700 dark:text-stone-200">승패 기록</span>을 확인할 수
-            있습니다.
+            <span className="font-semibold text-stone-700 dark:text-stone-200">승패 기록</span>을
+            확인할 수 있습니다.
           </p>
         </header>
 
@@ -84,7 +87,7 @@ export default function RecordsPage() {
                 placeholder="이름으로 검색"
                 className={cn(
                   "records-search-input h-10 w-full rounded-xl pl-9 pr-3 text-sm text-stone-900 dark:text-white",
-                  "placeholder:text-stone-500"
+                  "placeholder:text-stone-500",
                 )}
               />
             </div>

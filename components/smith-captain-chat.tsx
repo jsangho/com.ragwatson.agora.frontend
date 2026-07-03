@@ -1,17 +1,9 @@
 "use client";
 
-import {
-  FormEvent,
-  KeyboardEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { FormEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 import { Loader2, Plus, RefreshCw, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { parseApiError } from "@/lib/api";
-
 
 type ChatMessage = {
   role: "user" | "assistant";
@@ -50,7 +42,7 @@ export function SmithCaptainChat({ className }: { className?: string }) {
 
   const patchState = useCallback(
     (patch: Partial<ChatState>) => setState((prev) => ({ ...prev, ...patch })),
-    []
+    [],
   );
 
   useEffect(() => {
@@ -112,10 +104,7 @@ export function SmithCaptainChat({ className }: { className?: string }) {
         if (done) break;
         reply += decoder.decode(value, { stream: true });
         patchState({
-          messages: [
-            ...history,
-            { role: "assistant", text: reply, ts: assistantTs },
-          ],
+          messages: [...history, { role: "assistant", text: reply, ts: assistantTs }],
         });
       }
 
@@ -126,10 +115,7 @@ export function SmithCaptainChat({ className }: { className?: string }) {
       }
 
       patchState({
-        messages: [
-          ...history,
-          { role: "assistant", text: reply, ts: assistantTs },
-        ],
+        messages: [...history, { role: "assistant", text: reply, ts: assistantTs }],
         lastPayload: null,
       });
     } catch {
@@ -171,16 +157,8 @@ export function SmithCaptainChat({ className }: { className?: string }) {
     });
 
   return (
-    <div
-      className={cn(
-        "flex min-h-0 flex-1 flex-col overflow-hidden",
-        className
-      )}
-    >
-      <div
-        ref={scrollRef}
-        className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-1 pb-4"
-      >
+    <div className={cn("flex min-h-0 flex-1 flex-col overflow-hidden", className)}>
+      <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-1 pb-4">
         <div className="mx-auto flex max-w-3xl flex-col gap-4">
           {state.messages.map((msg, idx) => {
             const isStreamingDraft =
@@ -204,17 +182,14 @@ export function SmithCaptainChat({ className }: { className?: string }) {
             return (
               <div
                 key={`${msg.ts}-${idx}`}
-                className={cn(
-                  "flex",
-                  msg.role === "user" ? "justify-end" : "justify-start"
-                )}
+                className={cn("flex", msg.role === "user" ? "justify-end" : "justify-start")}
               >
                 <div
                   className={cn(
                     "max-w-[88%] rounded-3xl px-4 py-3 text-sm leading-relaxed shadow-sm",
                     msg.role === "user"
                       ? "bg-stone-200 dark:bg-stone-100 text-stone-900"
-                      : "border border-stone-300/60 dark:border-stone-700/60 bg-stone-100/50 dark:bg-stone-950/50 text-stone-800 dark:text-stone-100"
+                      : "border border-stone-300/60 dark:border-stone-700/60 bg-stone-100/50 dark:bg-stone-950/50 text-stone-800 dark:text-stone-100",
                   )}
                 >
                   {msg.role === "assistant" && (
@@ -223,14 +198,11 @@ export function SmithCaptainChat({ className }: { className?: string }) {
                     </p>
                   )}
                   <p className="whitespace-pre-wrap break-words">{msg.text}</p>
-                  <p className="mt-1.5 text-[11px] text-stone-500">
-                    {formatTime(msg.ts)}
-                  </p>
+                  <p className="mt-1.5 text-[11px] text-stone-500">{formatTime(msg.ts)}</p>
                 </div>
               </div>
             );
           })}
-
         </div>
       </div>
 

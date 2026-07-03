@@ -9,11 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  isResultsAdmin,
-  lockResultsAdmin,
-  unlockResultsAdmin,
-} from "@/lib/ple-results-admin";
+import { isResultsAdmin, lockResultsAdmin, unlockResultsAdmin } from "@/lib/ple-results-admin";
 
 type PleResultsAdminGateProps = {
   onAdminChange?: (isAdmin: boolean) => void;
@@ -36,7 +32,7 @@ export function PleResultsAdminGate({ onAdminChange }: PleResultsAdminGateProps)
       setIsAdmin(ok);
       onAdminChange?.(ok);
     },
-    [onAdminChange]
+    [onAdminChange],
   );
 
   const handleUnlock = (e: React.FormEvent) => {
@@ -121,10 +117,7 @@ export function PleResultsAdminGate({ onAdminChange }: PleResultsAdminGateProps)
                 {error}
               </p>
             )}
-            <Button
-              type="submit"
-              className="w-full bg-amber-600 text-stone-950 hover:bg-amber-500"
-            >
+            <Button type="submit" className="w-full bg-amber-600 text-stone-950 hover:bg-amber-500">
               확인
             </Button>
           </form>

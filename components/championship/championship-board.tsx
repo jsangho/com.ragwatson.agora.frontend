@@ -10,10 +10,7 @@ import {
   type ChampionshipTier,
   type TitleReign,
 } from "@/lib/championship-api";
-import {
-  formatChampionshipDate,
-  groupTitlesByTier,
-} from "@/lib/wwe-current-champions";
+import { formatChampionshipDate, groupTitlesByTier } from "@/lib/wwe-current-champions";
 
 const BRAND_ACCENT: Record<
   BrandRoster["accent"],
@@ -22,25 +19,29 @@ const BRAND_ACCENT: Record<
   red: {
     border: "border-red-300/60 dark:border-red-700/45",
     glow: "from-red-50/60 via-stone-50/30 to-stone-50/50 dark:from-red-950/50 dark:via-stone-950/40 dark:to-stone-950/70",
-    badge: "border-red-400/50 bg-red-50 text-red-700 dark:border-red-600/50 dark:bg-red-950/40 dark:text-red-200",
+    badge:
+      "border-red-400/50 bg-red-50 text-red-700 dark:border-red-600/50 dark:bg-red-950/40 dark:text-red-200",
     label: "text-red-600 dark:text-red-300/90",
   },
   blue: {
     border: "border-blue-300/60 dark:border-blue-700/45",
     glow: "from-blue-50/60 via-stone-50/30 to-stone-50/50 dark:from-blue-950/50 dark:via-stone-950/40 dark:to-stone-950/70",
-    badge: "border-blue-400/50 bg-blue-50 text-blue-700 dark:border-blue-600/50 dark:bg-blue-950/40 dark:text-blue-200",
+    badge:
+      "border-blue-400/50 bg-blue-50 text-blue-700 dark:border-blue-600/50 dark:bg-blue-950/40 dark:text-blue-200",
     label: "text-blue-600 dark:text-blue-300/90",
   },
   gold: {
     border: "border-amber-300/60 dark:border-amber-600/45",
     glow: "from-amber-50/60 via-stone-50/30 to-stone-50/50 dark:from-amber-950/45 dark:via-stone-950/40 dark:to-stone-950/70",
-    badge: "border-amber-400/50 bg-amber-50 text-amber-700 dark:border-amber-600/50 dark:bg-amber-950/40 dark:text-amber-200",
+    badge:
+      "border-amber-400/50 bg-amber-50 text-amber-700 dark:border-amber-600/50 dark:bg-amber-950/40 dark:text-amber-200",
     label: "text-amber-600 dark:text-amber-300/90",
   },
   purple: {
     border: "border-violet-300/60 dark:border-violet-700/45",
     glow: "from-violet-50/60 via-stone-50/30 to-stone-50/50 dark:from-violet-950/45 dark:via-stone-950/40 dark:to-stone-950/70",
-    badge: "border-violet-400/50 bg-violet-50 text-violet-700 dark:border-violet-600/50 dark:bg-violet-950/40 dark:text-violet-200",
+    badge:
+      "border-violet-400/50 bg-violet-50 text-violet-700 dark:border-violet-600/50 dark:bg-violet-950/40 dark:text-violet-200",
     label: "text-violet-600 dark:text-violet-300/90",
   },
 };
@@ -105,7 +106,7 @@ function TitleCard({
         styles.glow,
         isMain && "championship-card-main sm:p-6",
         isTag && "championship-card-tag",
-        isOther && "championship-card-other"
+        isOther && "championship-card-other",
       )}
     >
       <div
@@ -118,21 +119,15 @@ function TitleCard({
           <p
             className={cn(
               "font-medium leading-snug text-stone-500 dark:text-stone-400",
-              isMain ? "text-xs sm:text-sm" : "text-[11px] sm:text-xs"
+              isMain ? "text-xs sm:text-sm" : "text-[11px] sm:text-xs",
             )}
           >
             {reign.beltName}
           </p>
           {isMain ? (
-            <Crown
-              className="h-4 w-4 shrink-0 text-amber-400/80 sm:h-5 sm:w-5"
-              aria-hidden
-            />
+            <Crown className="h-4 w-4 shrink-0 text-amber-400/80 sm:h-5 sm:w-5" aria-hidden />
           ) : isTag ? (
-            <Users
-              className="h-3.5 w-3.5 shrink-0 text-stone-500"
-              aria-hidden
-            />
+            <Users className="h-3.5 w-3.5 shrink-0 text-stone-500" aria-hidden />
           ) : null}
         </div>
 
@@ -141,7 +136,7 @@ function TitleCard({
             <p
               className={cn(
                 "font-sport font-bold uppercase tracking-wide text-amber-700 dark:text-amber-200/85",
-                isTag ? "text-sm sm:text-base" : "text-xs"
+                isTag ? "text-sm sm:text-base" : "text-xs",
               )}
             >
               {reign.teamName}
@@ -153,7 +148,7 @@ function TitleCard({
               isMain && "font-kr-hero text-2xl sm:text-3xl md:text-4xl",
               tier === "secondary" && "text-lg sm:text-xl",
               isTag && "text-base sm:text-lg",
-              isOther && "text-sm sm:text-base"
+              isOther && "text-sm sm:text-base",
             )}
           >
             <ChampionNames reign={reign} tier={tier} />
@@ -162,9 +157,7 @@ function TitleCard({
 
         <p className="mt-2 text-[11px] font-medium text-stone-500 sm:text-xs">
           {formatChampionshipDate(reign.wonAt)}
-          {reign.wonEvent ? (
-            <span className="text-stone-600"> · {reign.wonEvent}</span>
-          ) : null}
+          {reign.wonEvent ? <span className="text-stone-600"> · {reign.wonEvent}</span> : null}
         </p>
       </div>
     </article>
@@ -189,7 +182,7 @@ function TierGrid({
         tier === "main" && "sm:grid-cols-2",
         tier === "secondary" && "sm:grid-cols-2",
         tier === "tag" && "sm:grid-cols-2",
-        tier === "other" && "sm:grid-cols-2 lg:grid-cols-3"
+        tier === "other" && "sm:grid-cols-2 lg:grid-cols-3",
       )}
     >
       {titles.map((reign) => (
@@ -212,7 +205,7 @@ function BrandSection({ brand }: { brand: BrandRoster }) {
     <section
       className={cn(
         "ple-section-glow rounded-2xl border bg-stone-50/55 dark:bg-stone-950/55 p-4 backdrop-blur-sm sm:rounded-3xl sm:p-6",
-        styles.border
+        styles.border,
       )}
       aria-labelledby={`brand-${brand.id}`}
     >
@@ -221,7 +214,7 @@ function BrandSection({ brand }: { brand: BrandRoster }) {
           <p
             className={cn(
               "font-sport text-[10px] font-bold uppercase tracking-[0.2em]",
-              styles.label
+              styles.label,
             )}
           >
             {brand.id === "global" ? "Cross-Brand" : brand.id}
@@ -237,7 +230,7 @@ function BrandSection({ brand }: { brand: BrandRoster }) {
         <span
           className={cn(
             "rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide",
-            styles.badge
+            styles.badge,
           )}
         >
           {brand.titles.length} titles
