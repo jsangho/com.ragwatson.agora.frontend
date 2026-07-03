@@ -10,5 +10,4 @@ node_modules
 .DS_Store
 
 # Claude Code (symlink — Vercel 빌드 불가)
-CLAUDE.md
 _claude/

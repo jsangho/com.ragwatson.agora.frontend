@@ -684,25 +684,25 @@ function TelegramComposeCard() {
 
 // ── 받은편지함 ────────────────────────────────────────────────────────────────
 
-type InboxEmail = {
+type ReceiverEmail = {
   id: number;
   from_email: string;
   from_name: string;
   subject: string;
   body: string;
-  received_at: string;
+  receiver_at: string;
   is_read: boolean;
 };
 
-function InboxPanel() {
-  const [emails, setEmails] = useState<InboxEmail[]>([]);
-  const [selected, setSelected] = useState<InboxEmail | null>(null);
+function ReceiverPanel() {
+  const [emails, setEmails] = useState<ReceiverEmail[]>([]);
+  const [selected, setSelected] = useState<ReceiverEmail | null>(null);
   const [loading, setLoading] = useState(true);
 
   const fetchEmails = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/inbox");
+      const res = await fetch("/api/receiver");
       if (res.ok) setEmails(await res.json());
     } finally {
       setLoading(false);
@@ -711,13 +711,15 @@ function InboxPanel() {
 
   useEffect(() => { fetchEmails(); }, []);
 
-  const openEmail = async (email: InboxEmail) => {
+  const openEmail = async (email: ReceiverEmail) => {
     setSelected(email);
     if (!email.is_read) {
-      await fetch(`/api/inbox/${email.id}/read`, { method: "PATCH" });
-      setEmails((prev) =>
-        prev.map((e) => (e.id === email.id ? { ...e, is_read: true } : e))
-      );
+      const res = await fetch(`/api/receiver/${email.id}/read`, { method: "PATCH" });
+      if (res.ok) {
+        setEmails((prev) =>
+          prev.map((e) => (e.id === email.id ? { ...e, is_read: true } : e))
+        );
+      }
     }
   };
 
@@ -778,7 +780,7 @@ function InboxPanel() {
                     </p>
                   </div>
                   <span className="shrink-0 text-[10px] text-stone-600">
-                    {new Date(email.received_at).toLocaleDateString("ko-KR", { month: "short", day: "numeric" })}
+                    {new Date(email.receiver_at).toLocaleDateString("ko-KR", { month: "short", day: "numeric" })}
                   </span>
                 </div>
               </li>
@@ -799,7 +801,7 @@ function InboxPanel() {
                 <MailOpen className="h-3.5 w-3.5" />
                 <span>{selected.from_name ? `${selected.from_name} <${selected.from_email}>` : selected.from_email}</span>
                 <span>·</span>
-                <span>{new Date(selected.received_at).toLocaleString("ko-KR")}</span>
+                <span>{new Date(selected.receiver_at).toLocaleString("ko-KR")}</span>
               </div>
             </div>
             <div
@@ -998,7 +1000,7 @@ export default function AdminDashboard() {
             ) : emailSubTab === "텔레그램" ? (
               <TelegramComposeCard />
             ) : (
-              <InboxPanel />
+              <ReceiverPanel />
             )}
           </>
         ) : (
