@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
-import { LogIn, Trophy } from "lucide-react";
+import { LogIn, Menu, Trophy, X } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { KayfabeLogo } from "@/components/kayfabe-logo";
 import { PlePickerDialog } from "@/components/ple-picker-dialog";
@@ -31,12 +31,14 @@ function NavLink({
   champion = false,
   icon,
   children,
+  fullWidth = false,
 }: {
   href: string;
   active: boolean;
   champion?: boolean;
   icon?: ReactNode;
   children: ReactNode;
+  fullWidth?: boolean;
 }) {
   return (
     <Link
@@ -44,6 +46,7 @@ function NavLink({
       className={cn(
         buttonVariants({ variant: "outline", size: "sm" }),
         "gap-1.5",
+        fullWidth && "w-full justify-start",
         navLinkClass(active, champion),
       )}
       {...(active ? { "aria-current": "page" as const } : {})}
@@ -59,10 +62,15 @@ export function Navbar() {
   const { user, logout, isReady } = useAuth();
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
 
   const isPle =
     mounted && (pathname === "/ple" || pathname.startsWith("/ple/"));
@@ -83,16 +91,73 @@ export function Navbar() {
   function handleLogout() {
     logout();
     router.push("/");
+    setMobileOpen(false);
   }
+
+  const authControls = !showAuth ? (
+    <div
+      className="h-8 w-[7.5rem] animate-pulse rounded-md border border-stone-300/50 dark:border-stone-700/50 bg-stone-200/60 dark:bg-stone-800/60"
+      aria-hidden
+    />
+  ) : user ? (
+    <>
+      <NavLink href="/my-info" active={isMyInfo} fullWidth={mobileOpen}>
+        내 정보
+      </NavLink>
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        className={cn(
+          navLinkClass(false),
+          mobileOpen && "w-full justify-start",
+        )}
+        onClick={handleLogout}
+      >
+        로그아웃
+      </Button>
+      <span
+        className="max-w-[8rem] truncate px-1 text-sm font-semibold text-stone-900 dark:text-stone-100"
+        title={authDisplayName(user)}
+      >
+        {authDisplayName(user)}
+      </span>
+    </>
+  ) : (
+    <NavLink
+      href="/login"
+      active={isLogin}
+      champion
+      fullWidth={mobileOpen}
+      icon={
+        <LogIn className="h-3.5 w-3.5 shrink-0 text-amber-400" aria-hidden />
+      }
+    >
+      로그인
+    </NavLink>
+  );
 
   return (
     <header className="sticky top-0 z-50 w-full min-w-0 border-b border-stone-200/80 dark:border-white/10 bg-white/90 dark:bg-[#0a0a0c]/85 backdrop-blur-[12px] supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-[#0a0a0c]/70">
       <div className="mx-auto flex w-full max-w-5xl min-w-0 items-center justify-between gap-2 px-4 py-3">
-        <div className="flex shrink-0 items-center">
+        <div className="flex min-w-0 shrink-0 items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-expanded={mobileOpen}
+            aria-label={mobileOpen ? "메뉴 닫기" : "메뉴 열기"}
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-stone-300/70 dark:border-stone-700/70 bg-stone-100/40 dark:bg-stone-800/40 text-stone-700 dark:text-stone-100 hover:bg-stone-200/60 dark:hover:bg-stone-700/60 md:hidden"
+          >
+            {mobileOpen ? (
+              <X className="size-5" aria-hidden />
+            ) : (
+              <Menu className="size-5" aria-hidden />
+            )}
+          </button>
           <KayfabeLogo />
         </div>
 
-        <div className="flex items-center gap-1.5 overflow-x-auto">
+        <div className="hidden items-center gap-1.5 md:flex">
           <PlePickerDialog triggerClassName={navLinkClass(isPle)} />
           <NavLink href="/results" active={isResults}>
             결과
@@ -118,7 +183,7 @@ export function Navbar() {
           </NavLink>
         </div>
 
-        <div className="flex shrink-0 items-center gap-1.5">
+        <div className="hidden shrink-0 items-center gap-1.5 md:flex">
           <WeatherWidget />
           <NavLink href="/lesson" active={isLesson}>
             Lesson
@@ -126,50 +191,61 @@ export function Navbar() {
           <NavLink href="/admin" active={isAdmin}>
             관리자
           </NavLink>
-          {!showAuth ? (
-            <div
-              className="h-8 w-[7.5rem] animate-pulse rounded-md border border-stone-300/50 dark:border-stone-700/50 bg-stone-200/60 dark:bg-stone-800/60"
-              aria-hidden
+          {authControls}
+          <ThemeToggle />
+        </div>
+
+        <div className="flex shrink-0 items-center md:hidden">
+          <ThemeToggle />
+        </div>
+      </div>
+
+      {mobileOpen && (
+        <div className="border-t border-stone-200/80 dark:border-white/10 px-4 py-3 md:hidden">
+          <nav
+            className="mx-auto flex w-full max-w-5xl flex-col gap-2"
+            aria-label="모바일 메뉴"
+          >
+            <PlePickerDialog
+              triggerClassName={cn(navLinkClass(isPle), "w-full justify-start")}
             />
-          ) : user ? (
-            <>
-              <NavLink href="/my-info" active={isMyInfo}>
-                내 정보
-              </NavLink>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                className={navLinkClass(false)}
-                onClick={handleLogout}
-              >
-                로그아웃
-              </Button>
-              <span
-                className="max-w-[8rem] truncate px-1 text-sm font-semibold text-stone-900 dark:text-stone-100"
-                title={authDisplayName(user)}
-              >
-                {authDisplayName(user)}
-              </span>
-            </>
-          ) : (
+            <NavLink href="/results" active={isResults} fullWidth>
+              결과
+            </NavLink>
             <NavLink
-              href="/login"
-              active={isLogin}
+              href="/rankings"
+              active={isRankings}
               champion
+              fullWidth
               icon={
-                <LogIn
+                <Trophy
                   className="h-3.5 w-3.5 shrink-0 text-amber-400"
                   aria-hidden
                 />
               }
             >
-              로그인
+              순위표
             </NavLink>
-          )}
-          <ThemeToggle />
+            <NavLink href="/records" active={isRecords} fullWidth>
+              기록
+            </NavLink>
+            <NavLink href="/championship" active={isChampionship} fullWidth>
+              챔피언십
+            </NavLink>
+            <NavLink href="/lesson" active={isLesson} fullWidth>
+              Lesson
+            </NavLink>
+            <NavLink href="/admin" active={isAdmin} fullWidth>
+              관리자
+            </NavLink>
+            {authControls}
+            <div className="pt-1">
+              <WeatherWidget />
+            </div>
+          </nav>
         </div>
-      </div>
+      )}
+
       <WweTicker />
     </header>
   );
