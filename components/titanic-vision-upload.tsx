@@ -211,7 +211,7 @@ export function TitanicVisionUpload() {
 
       {state.kind === "ready" && (
         <div className="mt-8 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50/80 dark:bg-zinc-900/80 p-4">
-          <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200">
+          <p className="break-all text-sm font-medium text-zinc-800 dark:text-zinc-200">
             선택한 파일: {state.fileName}
           </p>
           {/* eslint-disable-next-line @next/next/no-img-element -- 로컬 blob URL 미리보기 */}

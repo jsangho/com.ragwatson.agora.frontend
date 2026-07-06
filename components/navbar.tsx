@@ -141,19 +141,6 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full min-w-0 border-b border-stone-200/80 dark:border-white/10 bg-white/90 dark:bg-[#0a0a0c]/85 backdrop-blur-[12px] supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-[#0a0a0c]/70">
       <div className="mx-auto flex w-full max-w-5xl min-w-0 items-center justify-between gap-2 px-4 py-3">
         <div className="flex min-w-0 shrink-0 items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setMobileOpen((v) => !v)}
-            aria-expanded={mobileOpen}
-            aria-label={mobileOpen ? "메뉴 닫기" : "메뉴 열기"}
-            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-stone-300/70 dark:border-stone-700/70 bg-stone-100/40 dark:bg-stone-800/40 text-stone-700 dark:text-stone-100 hover:bg-stone-200/60 dark:hover:bg-stone-700/60 md:hidden"
-          >
-            {mobileOpen ? (
-              <X className="size-5" aria-hidden />
-            ) : (
-              <Menu className="size-5" aria-hidden />
-            )}
-          </button>
           <KayfabeLogo />
         </div>
 
@@ -195,8 +182,21 @@ export function Navbar() {
           <ThemeToggle />
         </div>
 
-        <div className="flex shrink-0 items-center md:hidden">
+        <div className="flex shrink-0 items-center gap-1.5 md:hidden">
           <ThemeToggle />
+          <button
+            type="button"
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-expanded={mobileOpen}
+            aria-label={mobileOpen ? "메뉴 닫기" : "메뉴 열기"}
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-stone-300/70 dark:border-stone-700/70 bg-stone-100/40 dark:bg-stone-800/40 text-stone-700 dark:text-stone-100 hover:bg-stone-200/60 dark:hover:bg-stone-700/60"
+          >
+            {mobileOpen ? (
+              <X className="size-5" aria-hidden />
+            ) : (
+              <Menu className="size-5" aria-hidden />
+            )}
+          </button>
         </div>
       </div>
 

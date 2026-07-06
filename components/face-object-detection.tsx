@@ -176,15 +176,15 @@ export function FaceObjectDetection({ className }: { className?: string }) {
 
       {state.kind === "ready" && (
         <div className="mt-6 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50/80 dark:bg-zinc-900/80 p-4">
-          <p className="mb-3 text-sm font-medium text-zinc-800 dark:text-zinc-200">
+          <p className="mb-3 break-all text-sm font-medium text-zinc-800 dark:text-zinc-200">
             선택한 파일: {state.fileName}
           </p>
-          <div className="relative inline-block max-w-full">
+          <div className="relative w-full overflow-hidden rounded-lg">
             {/* eslint-disable-next-line @next/next/no-img-element -- 로컬 blob URL 미리보기 + bbox 오버레이 */}
             <img
               src={state.previewUrl}
               alt={state.fileName}
-              className="max-h-96 max-w-full rounded-lg border border-zinc-200 dark:border-zinc-700 object-contain"
+              className="h-auto max-h-[70vh] w-full rounded-lg border border-zinc-200 dark:border-zinc-700 object-contain"
               onLoad={(e) => {
                 const img = e.currentTarget;
                 setImageSize({
