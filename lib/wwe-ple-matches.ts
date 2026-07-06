@@ -93,7 +93,10 @@ function rumbleWinner(
     id,
     title,
     cardVariant,
-    [...topFive.map((name) => ({ name })), { name: BRACKET_LABELS.rumbleOther }],
+    [
+      ...topFive.map((name) => ({ name })),
+      { name: BRACKET_LABELS.rumbleOther },
+    ],
     [...odds],
   );
 }
@@ -120,7 +123,13 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "rr26-women-rumble",
       "Women's Royal Rumble Match",
       "sideA",
-      ["Charlotte Flair", "Liv Morgan", "Tiffany Stratton", "Rhea Ripley", "Becky Lynch"],
+      [
+        "Charlotte Flair",
+        "Liv Morgan",
+        "Tiffany Stratton",
+        "Rhea Ripley",
+        "Becky Lynch",
+      ],
       [4.5, 5.5, 6.0, 8.0, 9.5, 12.0],
     ),
     rumbleWinner(
@@ -224,7 +233,11 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "sad26-women",
       "NXT Women's Championship",
       "sideB",
-      [{ name: "Lola Vice" }, { name: "Jacy Jayne", isChampion: true }, { name: "Kendal Grey" }],
+      [
+        { name: "Lola Vice" },
+        { name: "Jacy Jayne", isChampion: true },
+        { name: "Kendal Grey" },
+      ],
       [2.5, 2.2, 4.0],
     ),
     mm(
@@ -461,7 +474,11 @@ export const PLE_MATCH_CARDS: Record<PleSlug, PleMatchCard[]> = {
       "noc26-undisputed",
       "Undisputed WWE Championship",
       "sideA",
-      [{ name: "Cody Rhodes", isChampion: true }, { name: "Gunther" }, { name: "Sami Zayn" }],
+      [
+        { name: "Cody Rhodes", isChampion: true },
+        { name: "Gunther" },
+        { name: "Sami Zayn" },
+      ],
       [1.17, 7.0, 4.0],
     ),
     m2(

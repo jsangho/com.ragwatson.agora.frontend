@@ -1,6 +1,13 @@
 "use client";
 
-import { FormEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
+import {
+  FormEvent,
+  KeyboardEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Loader2, Plus, RefreshCw, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { parseApiError } from "@/lib/api";
@@ -85,7 +92,8 @@ export function SmithCaptainChat({ className }: { className?: string }) {
         } | null;
         patchState({
           messages: history,
-          errorMessage: parseApiError(data, response.status) || CHAT_REQUEST_FAILED,
+          errorMessage:
+            parseApiError(data, response.status) || CHAT_REQUEST_FAILED,
         });
         return;
       }
@@ -104,7 +112,10 @@ export function SmithCaptainChat({ className }: { className?: string }) {
         if (done) break;
         reply += decoder.decode(value, { stream: true });
         patchState({
-          messages: [...history, { role: "assistant", text: reply, ts: assistantTs }],
+          messages: [
+            ...history,
+            { role: "assistant", text: reply, ts: assistantTs },
+          ],
         });
       }
 
@@ -115,7 +126,10 @@ export function SmithCaptainChat({ className }: { className?: string }) {
       }
 
       patchState({
-        messages: [...history, { role: "assistant", text: reply, ts: assistantTs }],
+        messages: [
+          ...history,
+          { role: "assistant", text: reply, ts: assistantTs },
+        ],
         lastPayload: null,
       });
     } catch {
@@ -129,7 +143,9 @@ export function SmithCaptainChat({ className }: { className?: string }) {
     e.preventDefault();
     if (state.isLoading) return;
 
-    const text = String(new FormData(e.currentTarget).get("message") ?? "").trim();
+    const text = String(
+      new FormData(e.currentTarget).get("message") ?? "",
+    ).trim();
     if (!text) return;
 
     const userMessage: ChatMessage = {
@@ -157,8 +173,13 @@ export function SmithCaptainChat({ className }: { className?: string }) {
     });
 
   return (
-    <div className={cn("flex min-h-0 flex-1 flex-col overflow-hidden", className)}>
-      <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-1 pb-4">
+    <div
+      className={cn("flex min-h-0 flex-1 flex-col overflow-hidden", className)}
+    >
+      <div
+        ref={scrollRef}
+        className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-1 pb-4"
+      >
         <div className="mx-auto flex max-w-3xl flex-col gap-4">
           {state.messages.map((msg, idx) => {
             const isStreamingDraft =
@@ -182,7 +203,10 @@ export function SmithCaptainChat({ className }: { className?: string }) {
             return (
               <div
                 key={`${msg.ts}-${idx}`}
-                className={cn("flex", msg.role === "user" ? "justify-end" : "justify-start")}
+                className={cn(
+                  "flex",
+                  msg.role === "user" ? "justify-end" : "justify-start",
+                )}
               >
                 <div
                   className={cn(
@@ -198,7 +222,9 @@ export function SmithCaptainChat({ className }: { className?: string }) {
                     </p>
                   )}
                   <p className="whitespace-pre-wrap break-words">{msg.text}</p>
-                  <p className="mt-1.5 text-[11px] text-stone-500">{formatTime(msg.ts)}</p>
+                  <p className="mt-1.5 text-[11px] text-stone-500">
+                    {formatTime(msg.ts)}
+                  </p>
                 </div>
               </div>
             );
@@ -208,7 +234,9 @@ export function SmithCaptainChat({ className }: { className?: string }) {
 
       {state.errorMessage && (
         <div className="mx-auto mb-3 w-full max-w-3xl rounded-xl border border-red-400/40 dark:border-red-900/40 bg-red-50/80 dark:bg-red-950/30 px-4 py-3">
-          <p className="text-sm text-red-700 dark:text-red-200">{state.errorMessage}</p>
+          <p className="text-sm text-red-700 dark:text-red-200">
+            {state.errorMessage}
+          </p>
           {state.lastPayload && (
             <button
               type="button"
@@ -225,7 +253,10 @@ export function SmithCaptainChat({ className }: { className?: string }) {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="mx-auto w-full max-w-3xl shrink-0">
+      <form
+        onSubmit={handleSubmit}
+        className="mx-auto w-full max-w-3xl shrink-0"
+      >
         <div className="rounded-[1.75rem] border border-stone-300/70 dark:border-stone-600/70 bg-stone-100/70 dark:bg-stone-950/70 px-3 py-2 shadow-lg shadow-black/20 backdrop-blur-sm">
           <label htmlFor="smith-chat-input" className="sr-only">
             스미스 선장에게 메시지 보내기

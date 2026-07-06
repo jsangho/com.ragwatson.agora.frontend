@@ -77,7 +77,10 @@ export function PleEventGrid({
         return (
           <li
             key={ple.slug}
-            className={cn("min-w-0", !isLarge && "w-[calc(50%-0.25rem)] sm:w-[9.5rem]")}
+            className={cn(
+              "min-w-0",
+              !isLarge && "w-[calc(50%-0.25rem)] sm:w-[9.5rem]",
+            )}
           >
             <Link
               href={`${hrefPrefix}/${ple.slug}`}
@@ -102,14 +105,21 @@ export function PleEventGrid({
                 {badge.label}
               </span>
 
-              <span className={cn("ple-month-badge absolute left-3 top-3", tbd && "opacity-60")}>
+              <span
+                className={cn(
+                  "ple-month-badge absolute left-3 top-3",
+                  tbd && "opacity-60",
+                )}
+              >
                 {formatPleMonth(ple.month)}
               </span>
 
               <span
                 className={cn(
                   "block font-bold leading-tight tracking-tight",
-                  tbd ? "text-stone-400 dark:text-stone-600" : "text-stone-800 dark:text-stone-50",
+                  tbd
+                    ? "text-stone-400 dark:text-stone-600"
+                    : "text-stone-800 dark:text-stone-50",
                   isLarge ? "font-sport text-xl sm:text-2xl" : "font-semibold",
                 )}
               >

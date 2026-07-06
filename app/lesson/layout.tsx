@@ -11,16 +11,25 @@ const DATA_COLLECTION_HREF = "/lesson/titanic/data-collection";
 const TITANIC_LIST_HREF = "/lesson/titanic/titaniclist";
 const SMITH_SAILOR_HREF = "/lesson/titanic/smith-sailor";
 const VISION_HREF = "/lesson/titanic/vision";
-export default function LessonLayout({ children }: { children: React.ReactNode }) {
+const OBJECT_DETECTION_HREF = "/lesson/titanic/vision/object-detection";
+export default function LessonLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
   const isTitanic = pathname === TITANIC_HREF;
   const isDataCollection = pathname === DATA_COLLECTION_HREF;
   const isTitanicList = pathname === TITANIC_LIST_HREF;
   const isSmithSailor = pathname === SMITH_SAILOR_HREF;
   const isVision = pathname === VISION_HREF;
-  const isLessonSection = isTitanic || isDataCollection || isTitanicList || isSmithSailor;
+  const isObjectDetection = pathname === OBJECT_DETECTION_HREF;
+  const isLessonSection =
+    isTitanic || isDataCollection || isTitanicList || isSmithSailor;
+  const isVisionSection = isVision || isObjectDetection;
 
   const [expanded, setExpanded] = useState(false);
+  const [visionExpanded, setVisionExpanded] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
@@ -28,6 +37,12 @@ export default function LessonLayout({ children }: { children: React.ReactNode }
       setExpanded(true);
     }
   }, [isDataCollection, isTitanicList, isSmithSailor]);
+
+  useEffect(() => {
+    if (isObjectDetection) {
+      setVisionExpanded(true);
+    }
+  }, [isObjectDetection]);
 
   useEffect(() => {
     setMobileOpen(false);
@@ -38,7 +53,9 @@ export default function LessonLayout({ children }: { children: React.ReactNode }
       <div
         className={cn(
           "flex items-center rounded-lg text-sm font-medium transition-colors",
-          isLessonSection ? "bg-stone-100 text-stone-950" : "text-stone-600 dark:text-stone-300",
+          isLessonSection
+            ? "bg-stone-100 text-stone-950"
+            : "text-stone-600 dark:text-stone-300",
         )}
       >
         <Link
@@ -66,7 +83,10 @@ export default function LessonLayout({ children }: { children: React.ReactNode }
           )}
         >
           <ChevronRight
-            className={cn("size-4 transition-transform duration-200", expanded && "rotate-90")}
+            className={cn(
+              "size-4 transition-transform duration-200",
+              expanded && "rotate-90",
+            )}
             aria-hidden
           />
         </button>
@@ -113,18 +133,62 @@ export default function LessonLayout({ children }: { children: React.ReactNode }
         </>
       )}
 
-      <Link
-        href={VISION_HREF}
-        aria-current={isVision ? "page" : undefined}
+      <div
         className={cn(
-          "rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
-          isVision
+          "flex items-center rounded-lg text-sm font-medium transition-colors",
+          isVisionSection
             ? "bg-stone-100 text-stone-950"
-            : "text-stone-600 dark:text-stone-300 hover:bg-stone-100/60 dark:hover:bg-stone-800/60 hover:text-stone-900 dark:hover:text-stone-50",
+            : "text-stone-600 dark:text-stone-300",
         )}
       >
-        비전 처리
-      </Link>
+        <Link
+          href={VISION_HREF}
+          aria-current={isVision ? "page" : undefined}
+          className={cn(
+            "min-w-0 flex-1 rounded-l-lg px-3 py-2.5 transition-colors",
+            !isVisionSection &&
+              "hover:bg-stone-100/60 dark:hover:bg-stone-800/60 hover:text-stone-900 dark:hover:text-stone-50",
+            isVisionSection && "hover:bg-stone-50",
+          )}
+        >
+          비전 처리
+        </Link>
+        <button
+          type="button"
+          onClick={() => setVisionExpanded((v) => !v)}
+          aria-expanded={visionExpanded}
+          aria-label={visionExpanded ? "하위 메뉴 접기" : "하위 메뉴 펼치기"}
+          className={cn(
+            "flex shrink-0 items-center justify-center rounded-r-lg px-2 py-2.5 transition-colors",
+            !isVisionSection &&
+              "hover:bg-stone-100/60 dark:hover:bg-stone-800/60 hover:text-stone-900 dark:hover:text-stone-50",
+            isVisionSection && "hover:bg-stone-50",
+          )}
+        >
+          <ChevronRight
+            className={cn(
+              "size-4 transition-transform duration-200",
+              visionExpanded && "rotate-90",
+            )}
+            aria-hidden
+          />
+        </button>
+      </div>
+
+      {visionExpanded && (
+        <Link
+          href={OBJECT_DETECTION_HREF}
+          aria-current={isObjectDetection ? "page" : undefined}
+          className={cn(
+            "rounded-lg py-2 pl-6 pr-3 text-sm transition-colors",
+            isObjectDetection
+              ? "bg-stone-100/90 font-semibold text-stone-950"
+              : "text-stone-600 dark:text-stone-300 hover:bg-stone-100/60 dark:hover:bg-stone-800/60 hover:text-stone-900 dark:hover:text-stone-50",
+          )}
+        >
+          객체 탐지
+        </Link>
+      )}
     </nav>
   );
 
@@ -172,14 +236,20 @@ export default function LessonLayout({ children }: { children: React.ReactNode }
           >
             <Menu className="size-5" aria-hidden />
           </button>
-          <span className="text-sm font-semibold text-stone-700 dark:text-stone-200">타이타닉</span>
+          <span className="text-sm font-semibold text-stone-700 dark:text-stone-200">
+            타이타닉
+          </span>
         </div>
 
         {children}
       </div>
 
       {mobileOpen && (
-        <div className="fixed inset-0 z-[60] md:hidden" role="dialog" aria-modal="true">
+        <div
+          className="fixed inset-0 z-[60] md:hidden"
+          role="dialog"
+          aria-modal="true"
+        >
           <button
             type="button"
             className="absolute inset-0 bg-black/55"
@@ -188,7 +258,9 @@ export default function LessonLayout({ children }: { children: React.ReactNode }
           />
           <aside className="absolute left-0 top-0 h-full w-[18rem] border-r border-stone-200/70 dark:border-stone-800/70 bg-white/90 dark:bg-stone-950/90 px-3 py-6 backdrop-blur">
             <div className="mb-4 flex items-center justify-between">
-              <span className="text-sm font-bold text-stone-900 dark:text-stone-100">타이타닉</span>
+              <span className="text-sm font-bold text-stone-900 dark:text-stone-100">
+                타이타닉
+              </span>
               <button
                 type="button"
                 onClick={() => setMobileOpen(false)}

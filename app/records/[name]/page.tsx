@@ -6,7 +6,10 @@ import { useParams } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { CompetitorRecordView } from "@/components/records/competitor-record-view";
 import { WweArenaShell } from "@/components/wwe-arena-shell";
-import { fetchCompetitorProfile, type CompetitorProfile } from "@/lib/records-api";
+import {
+  fetchCompetitorProfile,
+  type CompetitorProfile,
+} from "@/lib/records-api";
 import { fetchCompetitorTitleHistory } from "@/lib/title-history-api";
 import type { TitleAcquisition } from "@/lib/title-history-api";
 
@@ -40,7 +43,12 @@ export default function RecordDetailPage() {
     }
 
     let cancelled = false;
-    patchState({ loading: true, missing: false, profile: null, titleHistory: [] });
+    patchState({
+      loading: true,
+      missing: false,
+      profile: null,
+      titleHistory: [],
+    });
 
     void (async () => {
       const [profile, titleHistory] = await Promise.all([
@@ -92,7 +100,10 @@ export default function RecordDetailPage() {
             </Link>
           </div>
         ) : (
-          <CompetitorRecordView profile={state.profile} titleHistory={state.titleHistory} />
+          <CompetitorRecordView
+            profile={state.profile}
+            titleHistory={state.titleHistory}
+          />
         )}
       </div>
     </WweArenaShell>

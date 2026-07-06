@@ -9,7 +9,8 @@ import { KayfabeMark } from "@/components/kayfabe-logo";
 import { PleEventGrid } from "@/components/ple-event-grid";
 import { WweArenaShell } from "@/components/wwe-arena-shell";
 
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000";
+const apiBaseUrl =
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000";
 
 interface SampleDataItem {
   [key: string]: string | number | boolean | null;
@@ -60,9 +61,12 @@ function TitanicQaAppContent() {
             <div className="ple-section-glow w-full rounded-2xl border border-stone-300/50 dark:border-stone-700/50 bg-stone-50/60 dark:bg-stone-950/60 p-4 backdrop-blur-sm sm:rounded-3xl sm:p-6">
               <div className="mb-3 text-center sm:mb-4">
                 <p className="font-sport text-sm font-semibold tracking-[-0.04em] text-stone-500 dark:text-stone-400 sm:text-base">
-                  <span className="text-stone-900 dark:text-white">2026</span> Monthly PLE
+                  <span className="text-stone-900 dark:text-white">2026</span>{" "}
+                  Monthly PLE
                 </p>
-                <p className="mt-1 text-sm text-stone-500">이벤트를 골라 승부 예측에 참여하세요</p>
+                <p className="mt-1 text-sm text-stone-500">
+                  이벤트를 골라 승부 예측에 참여하세요
+                </p>
               </div>
               <PleEventGrid
                 variant="large"
@@ -114,7 +118,9 @@ const initialSampleDataState: SampleDataPageState = {
 };
 
 function TitanicSampleDataPage() {
-  const [state, setState] = useState<SampleDataPageState>(initialSampleDataState);
+  const [state, setState] = useState<SampleDataPageState>(
+    initialSampleDataState,
+  );
 
   const patchState = (patch: Partial<SampleDataPageState>) =>
     setState((prev) => ({ ...prev, ...patch }));
@@ -177,7 +183,9 @@ function TitanicSampleDataPage() {
 
       {state.errorMessage && (
         <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-          <p className="text-sm text-red-700 dark:text-red-400 mb-3">{state.errorMessage}</p>
+          <p className="text-sm text-red-700 dark:text-red-400 mb-3">
+            {state.errorMessage}
+          </p>
           <button
             onClick={fetchData}
             aria-label="다시 불러오기"

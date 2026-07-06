@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000";
+const apiBaseUrl =
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000";
 
 type WeatherState =
   | { status: "loading" }
@@ -40,7 +41,9 @@ async function fetchSeoulWeather() {
     /* ignore */
   }
   if (!res.ok) {
-    throw new Error(typeof data.detail === "string" ? data.detail : `weather ${res.status}`);
+    throw new Error(
+      typeof data.detail === "string" ? data.detail : `weather ${res.status}`,
+    );
   }
   if (data.temp_c == null || data.condition_id == null) {
     throw new Error("invalid weather payload");

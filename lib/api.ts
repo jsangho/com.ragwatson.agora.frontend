@@ -1,4 +1,5 @@
-export const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000";
+export const apiBaseUrl =
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000";
 
 export const titanicApiBaseUrl = `${apiBaseUrl}/api/titanic`;
 export const pleEventsBaseUrl = `${apiBaseUrl}/api/ple_events`;
@@ -27,7 +28,10 @@ type ApiErrorBody = {
   message?: string;
 };
 
-export function parseApiError(data: ApiErrorBody | null, status: number): string {
+export function parseApiError(
+  data: ApiErrorBody | null,
+  status: number,
+): string {
   const detail = data?.detail;
   if (typeof detail === "string") {
     return detail;

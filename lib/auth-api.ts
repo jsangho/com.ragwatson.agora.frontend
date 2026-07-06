@@ -11,7 +11,9 @@ type UserProfileJson = {
   role?: string;
 };
 
-export function parseUserProfile(data: UserProfileJson | null): AuthUser | null {
+export function parseUserProfile(
+  data: UserProfileJson | null,
+): AuthUser | null {
   if (!data) return null;
   const id = data.userId ?? data.id;
   const nickname = data.nickname?.trim();
@@ -27,7 +29,9 @@ export function parseUserProfile(data: UserProfileJson | null): AuthUser | null 
   };
 }
 
-export async function fetchUserProfile(userId: number): Promise<AuthUser | null> {
+export async function fetchUserProfile(
+  userId: number,
+): Promise<AuthUser | null> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), requestTimeoutMs);
   try {

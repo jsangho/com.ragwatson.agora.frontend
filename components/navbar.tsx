@@ -64,13 +64,17 @@ export function Navbar() {
     setMounted(true);
   }, []);
 
-  const isPle = mounted && (pathname === "/ple" || pathname.startsWith("/ple/"));
+  const isPle =
+    mounted && (pathname === "/ple" || pathname.startsWith("/ple/"));
   const isResults = mounted && pathname === "/results";
   const isRankings = mounted && pathname === "/rankings";
-  const isRecords = mounted && (pathname === "/records" || pathname.startsWith("/records/"));
+  const isRecords =
+    mounted && (pathname === "/records" || pathname.startsWith("/records/"));
   const isChampionship =
-    mounted && (pathname === "/championship" || pathname.startsWith("/championship/"));
-  const isLesson = mounted && (pathname === "/lesson" || pathname.startsWith("/lesson/"));
+    mounted &&
+    (pathname === "/championship" || pathname.startsWith("/championship/"));
+  const isLesson =
+    mounted && (pathname === "/lesson" || pathname.startsWith("/lesson/"));
   const isAdmin = mounted && pathname === "/admin";
   const isLogin = mounted && pathname === "/login";
   const isMyInfo = mounted && pathname === "/my-info";
@@ -97,7 +101,12 @@ export function Navbar() {
             href="/rankings"
             active={isRankings}
             champion
-            icon={<Trophy className="h-3.5 w-3.5 shrink-0 text-amber-400" aria-hidden />}
+            icon={
+              <Trophy
+                className="h-3.5 w-3.5 shrink-0 text-amber-400"
+                aria-hidden
+              />
+            }
           >
             순위표
           </NavLink>
@@ -148,7 +157,12 @@ export function Navbar() {
               href="/login"
               active={isLogin}
               champion
-              icon={<LogIn className="h-3.5 w-3.5 shrink-0 text-amber-400" aria-hidden />}
+              icon={
+                <LogIn
+                  className="h-3.5 w-3.5 shrink-0 text-amber-400"
+                  aria-hidden
+                />
+              }
             >
               로그인
             </NavLink>

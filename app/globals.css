@@ -80,7 +80,8 @@
   --font-mono: var(--font-geist-mono), "Geist Mono", "Geist Mono Fallback";
   --font-sport: var(--font-sport), "Oswald", sans-serif;
   --font-kr:
-    "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    system-ui, sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -262,7 +263,11 @@
 
   .dark .ple-status-badge--deadline {
     border-color: rgba(239, 68, 68, 0.65);
-    background: linear-gradient(135deg, rgba(127, 29, 29, 0.9), rgba(69, 10, 10, 0.95));
+    background: linear-gradient(
+      135deg,
+      rgba(127, 29, 29, 0.9),
+      rgba(69, 10, 10, 0.95)
+    );
     color: #fecaca;
     box-shadow: 0 0 12px rgba(239, 68, 68, 0.35);
   }
@@ -431,7 +436,11 @@
         rgba(0, 0, 0, 0.02) 8px,
         rgba(0, 0, 0, 0.02) 9px
       ),
-      linear-gradient(160deg, rgba(241, 245, 249, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%);
+      linear-gradient(
+        160deg,
+        rgba(241, 245, 249, 0.95) 0%,
+        rgba(248, 250, 252, 0.9) 100%
+      );
   }
 
   .dark .ple-card--elimination-chamber {
@@ -450,7 +459,11 @@
         rgba(255, 255, 255, 0.02) 8px,
         rgba(255, 255, 255, 0.02) 9px
       ),
-      linear-gradient(160deg, rgba(39, 39, 42, 0.95) 0%, rgba(24, 24, 27, 0.9) 100%);
+      linear-gradient(
+        160deg,
+        rgba(39, 39, 42, 0.95) 0%,
+        rgba(24, 24, 27, 0.9) 100%
+      );
   }
 
   .ple-card--elimination-chamber:hover {
@@ -502,12 +515,20 @@
   }
 
   .ple-card--summerslam {
-    background: linear-gradient(145deg, rgba(255, 237, 213, 0.8), rgba(248, 250, 252, 0.9));
+    background: linear-gradient(
+      145deg,
+      rgba(255, 237, 213, 0.8),
+      rgba(248, 250, 252, 0.9)
+    );
     border-color: rgba(249, 115, 22, 0.4);
   }
 
   .dark .ple-card--summerslam {
-    background: linear-gradient(145deg, rgba(154, 52, 18, 0.35), rgba(15, 23, 42, 0.9));
+    background: linear-gradient(
+      145deg,
+      rgba(154, 52, 18, 0.35),
+      rgba(15, 23, 42, 0.9)
+    );
     border-color: rgba(249, 115, 22, 0.35);
   }
 
@@ -522,22 +543,38 @@
   }
 
   .ple-card--mitb {
-    background: linear-gradient(145deg, rgba(220, 252, 231, 0.75), rgba(248, 250, 252, 0.9));
+    background: linear-gradient(
+      145deg,
+      rgba(220, 252, 231, 0.75),
+      rgba(248, 250, 252, 0.9)
+    );
     border-color: rgba(34, 197, 94, 0.35);
   }
 
   .dark .ple-card--mitb {
-    background: linear-gradient(145deg, rgba(22, 101, 52, 0.35), rgba(15, 23, 42, 0.9));
+    background: linear-gradient(
+      145deg,
+      rgba(22, 101, 52, 0.35),
+      rgba(15, 23, 42, 0.9)
+    );
     border-color: rgba(34, 197, 94, 0.3);
   }
 
   .ple-card--champions {
-    background: linear-gradient(145deg, rgba(254, 249, 195, 0.75), rgba(248, 250, 252, 0.9));
+    background: linear-gradient(
+      145deg,
+      rgba(254, 249, 195, 0.75),
+      rgba(248, 250, 252, 0.9)
+    );
     border-color: rgba(234, 179, 8, 0.4);
   }
 
   .dark .ple-card--champions {
-    background: linear-gradient(145deg, rgba(113, 63, 18, 0.4), rgba(15, 23, 42, 0.9));
+    background: linear-gradient(
+      145deg,
+      rgba(113, 63, 18, 0.4),
+      rgba(15, 23, 42, 0.9)
+    );
     border-color: rgba(234, 179, 8, 0.35);
   }
 

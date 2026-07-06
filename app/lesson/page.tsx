@@ -20,7 +20,10 @@ export default function LessonHomePage() {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2 text-sm font-semibold text-stone-800 dark:text-stone-100">
-                  <BookOpen className="size-5 text-stone-500 dark:text-stone-300" aria-hidden />
+                  <BookOpen
+                    className="size-5 text-stone-500 dark:text-stone-300"
+                    aria-hidden
+                  />
                   분석 연습
                 </div>
                 <p className="mt-2 text-sm text-stone-600 dark:text-stone-300">
@@ -41,7 +44,10 @@ export default function LessonHomePage() {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2 text-sm font-semibold text-stone-800 dark:text-stone-100">
-                  <Database className="size-5 text-stone-500 dark:text-stone-300" aria-hidden />
+                  <Database
+                    className="size-5 text-stone-500 dark:text-stone-300"
+                    aria-hidden
+                  />
                   데이터 수집
                 </div>
                 <p className="mt-2 text-sm text-stone-600 dark:text-stone-300">
@@ -62,7 +68,10 @@ export default function LessonHomePage() {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2 text-sm font-semibold text-stone-800 dark:text-stone-100">
-                  <ListChecks className="size-5 text-stone-500 dark:text-stone-300" aria-hidden />
+                  <ListChecks
+                    className="size-5 text-stone-500 dark:text-stone-300"
+                    aria-hidden
+                  />
                   DB 리스트
                 </div>
                 <p className="mt-2 text-sm text-stone-600 dark:text-stone-300">

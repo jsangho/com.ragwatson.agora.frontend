@@ -1,5 +1,5 @@
-import nextConfig from "eslint-config-next/core-web-vitals"
-import tsPlugin from "@typescript-eslint/eslint-plugin"
+import nextConfig from "eslint-config-next/core-web-vitals";
+import tsPlugin from "@typescript-eslint/eslint-plugin";
 
 export default [
   { ignores: [".next/**", "node_modules/**"] },
@@ -18,4 +18,4 @@ export default [
       ],
     },
   },
-]
+];

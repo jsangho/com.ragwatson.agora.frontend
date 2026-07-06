@@ -7,7 +7,7 @@ export function impliedWinPercentFromDecimal(decimalOdds: number): number {
 /** 2자 시장 오버라운드 제거 후 정규화 (합 ≈ 100%) */
 export function normalizedTwoWayMarket(
   decimalA: number,
-  decimalB: number
+  decimalB: number,
 ): { left: number; right: number } {
   const rawLeft = 1 / decimalA;
   const rawRight = 1 / decimalB;

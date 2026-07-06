@@ -34,8 +34,8 @@ cd www && pnpm format      # Prettier
 
 ## 관련 문서
 
-| 문서 | 역할 |
-|------|------|
-| `.cursorrules` | **메인** — 저장소 구조·API 연동·UI 컨벤션 |
-| `CLAUDE.md` (본 문서) | 보조 — Karpathy 원칙의 프론트 적용 |
-| [_claude/REACT_RULES.md](./_claude/REACT_RULES.md) | React·Next.js 공통 패턴 |
+| 문서                                                | 역할                                      |
+| --------------------------------------------------- | ----------------------------------------- |
+| `.cursorrules`                                      | **메인** — 저장소 구조·API 연동·UI 컨벤션 |
+| `CLAUDE.md` (본 문서)                               | 보조 — Karpathy 원칙의 프론트 적용        |
+| [\_claude/REACT_RULES.md](./_claude/REACT_RULES.md) | React·Next.js 공통 패턴                   |

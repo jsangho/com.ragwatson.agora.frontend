@@ -8,7 +8,10 @@ import { GoogleSessionProvider } from "@/components/google-session-provider";
 import "./globals.css";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
-const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+});
 const oswald = Oswald({
   subsets: ["latin"],
   weight: ["500", "600", "700"],

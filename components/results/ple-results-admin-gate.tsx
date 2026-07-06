@@ -9,13 +9,19 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { isResultsAdmin, lockResultsAdmin, unlockResultsAdmin } from "@/lib/ple-results-admin";
+import {
+  isResultsAdmin,
+  lockResultsAdmin,
+  unlockResultsAdmin,
+} from "@/lib/ple-results-admin";
 
 type PleResultsAdminGateProps = {
   onAdminChange?: (isAdmin: boolean) => void;
 };
 
-export function PleResultsAdminGate({ onAdminChange }: PleResultsAdminGateProps) {
+export function PleResultsAdminGate({
+  onAdminChange,
+}: PleResultsAdminGateProps) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [password, setPassword] = useState("");
@@ -90,7 +96,9 @@ export function PleResultsAdminGate({ onAdminChange }: PleResultsAdminGateProps)
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-900 text-stone-900 dark:text-stone-100 sm:max-w-sm">
           <DialogHeader>
-            <DialogTitle className="text-stone-900 dark:text-stone-50">관리자 인증</DialogTitle>
+            <DialogTitle className="text-stone-900 dark:text-stone-50">
+              관리자 인증
+            </DialogTitle>
             <DialogDescription className="text-stone-400">
               결과를 등록·수정하려면 비밀번호를 입력하세요.
             </DialogDescription>
@@ -117,7 +125,10 @@ export function PleResultsAdminGate({ onAdminChange }: PleResultsAdminGateProps)
                 {error}
               </p>
             )}
-            <Button type="submit" className="w-full bg-amber-600 text-stone-950 hover:bg-amber-500">
+            <Button
+              type="submit"
+              className="w-full bg-amber-600 text-stone-950 hover:bg-amber-500"
+            >
               확인
             </Button>
           </form>

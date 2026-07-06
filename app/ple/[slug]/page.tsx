@@ -1,4 +1,4 @@
-  import { notFound } from "next/navigation";
+import { notFound } from "next/navigation";
 import { PleEventDetailView } from "@/components/ple/ple-event-detail";
 import { getPleBySlug } from "@/lib/wwe-ple";
 import { getPleDetailBySlug } from "@/lib/wwe-ple-detail";

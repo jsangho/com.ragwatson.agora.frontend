@@ -23,7 +23,11 @@ const WRESTLER_REGISTRY: Record<string, WrestlerEntry> = {
   },
   "The Wyatt Sicks": {
     kind: "stable",
-    members: [{ ringName: "Bo Dallas" }, { ringName: "Dexter Lumis" }, { ringName: "Joe Gacy" }],
+    members: [
+      { ringName: "Bo Dallas" },
+      { ringName: "Dexter Lumis" },
+      { ringName: "Joe Gacy" },
+    ],
   },
   "Motor City Machine Guns": {
     kind: "tag",
@@ -82,7 +86,11 @@ const WRESTLER_REGISTRY: Record<string, WrestlerEntry> = {
   },
   "LA Knight & The Usos": {
     kind: "group",
-    members: [{ ringName: "LA Knight" }, { ringName: "Jey Uso" }, { ringName: "Jimmy Uso" }],
+    members: [
+      { ringName: "LA Knight" },
+      { ringName: "Jey Uso" },
+      { ringName: "Jimmy Uso" },
+    ],
   },
   "Rhodes & Jey Uso": {
     kind: "tag",
@@ -168,7 +176,8 @@ export function resolveCompetitorInfo(ringName: string): CompetitorInfo {
   const direct = lookupEntry(key);
   if (direct) {
     if (direct.members?.length) {
-      const kind = direct.kind ?? (direct.members.length > 2 ? "stable" : "tag");
+      const kind =
+        direct.kind ?? (direct.members.length > 2 ? "stable" : "tag");
       return buildFromMembers(key, direct.members, kind);
     }
   }
