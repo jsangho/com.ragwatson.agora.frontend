@@ -2,7 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import { Upload } from "lucide-react";
-import { parseApiError, visionApiBaseUrl } from "@/lib/api";
+import { parseApiError } from "@/lib/api";
 
 type UploadState =
   | { kind: "empty" }
@@ -32,7 +32,7 @@ export function TitanicVisionUpload() {
       const form = new FormData();
       form.append("file", file);
 
-      const res = await fetch(`${visionApiBaseUrl}/upload`, {
+      const res = await fetch("/api/vision/upload", {
         method: "POST",
         body: form,
       });

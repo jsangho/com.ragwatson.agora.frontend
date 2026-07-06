@@ -3,7 +3,7 @@
 import { useCallback, useRef, useState } from "react";
 import { Upload } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { parseApiError, visionApiBaseUrl } from "@/lib/api";
+import { parseApiError } from "@/lib/api";
 
 type UploadState =
   | { kind: "empty" }
@@ -53,7 +53,7 @@ export function FaceObjectDetection({ className }: { className?: string }) {
       const form = new FormData();
       form.append("file", file);
 
-      const res = await fetch(`${visionApiBaseUrl}/identify`, {
+      const res = await fetch("/api/vision/identify", {
         method: "POST",
         body: form,
       });
